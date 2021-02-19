@@ -1,0 +1,1 @@
+Temperature (degrees fahrenheit)? Day of week (0 = Sun, 1 = Mon, ..., 6 = Sat)? Hour of day (0..23)? Is it raining (0 = no, 1 = yes)? Wind speed (MPH)? Price: 8.90

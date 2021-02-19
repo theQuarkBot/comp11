@@ -1,0 +1,37 @@
+Neil Powers
+02/13/21
+
+
+********** Written 1 ***********
+main {
+    Get user input
+    digits = countDigits(input)
+
+    printNumDigits(digits)
+    printIfNegative(input)
+}
+
+countDigits(int input) {
+    divide by 10 until input == 0
+        digits++
+        
+    return digits
+}
+
+printNumDigits(int digits) {
+    use if statements to return number of digits up to three
+}
+
+printIfNegative(int input) {
+    print something if negative
+}
+
+********** Written 2 ***********
+One issue I encountered while making the digits program was that I forgot to
+declare the functions before the main function. Didn't take too long to fix it,
+but it was definitely troubling. I also accidentally typed "ipnut" instead of
+"input" in places. In both cases, I looked at the error statements printed in
+terminal to find exactly where my error was.
+
+********** Written 3 ***********
+The whole assignment took a little under two hours.

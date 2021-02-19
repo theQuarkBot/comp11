@@ -1,0 +1,35 @@
+Script started on Wed 03 Feb 2021 10:14:05 PM EST
+vm-hw04{npower03}15: hostname
+vm-hw04
+vm-hw04{npower03}16: who
+mscand02 pts/0        2021-02-03 21:22 (10.245.70.55)
+npower03 pts/1        2021-02-03 21:56 (10.245.72.215)
+lwang19  pts/2        2021-02-03 21:57 (36.101.177.70)
+ilahde01 pts/3        2021-02-03 19:57 (10.245.40.34)
+wwagud01 pts/5        2021-02-03 20:15 (wr-130-64-93-91.medford.tufts.edu)
+ssteve06 pts/6        2021-02-03 20:20 (209-6-39-50.s7216.c3-0.smr-cbr2.sbo-smr.ma.cable.rcncustomer.com)
+qcheng01 pts/9        2021-02-03 22:14 (10.245.71.114)
+klalic01 pts/4        2021-02-03 22:13 (10.245.55.151)
+npower03 pts/7        2021-02-03 22:14
+vm-hw04{npower03}17: w
+ 22:14:24 up 23 days,  8:01,  9 users,  load average: 1.37, 1.31, 1.14
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+mscand02 pts/0    10.245.70.55     21:22   43:44   0.12s  0.12s -tcsh
+npower03 pts/1    10.245.72.215    21:56    0.00s  0.12s  0.00s script
+lwang19  pts/2    36.101.177.70    21:57   12:16   0.09s  0.09s -tcsh
+ilahde01 pts/3    10.245.40.34     19:57   40:56   0.19s  0.19s -tcsh
+wwagud01 pts/5    wr-130-64-93-91. 20:15   47:36   0.23s  0.23s -tcsh
+ssteve06 pts/6    209-6-39-50.s721 20:20   24:16   0.35s  0.00s watch -n 30 hal
+qcheng01 pts/9    10.245.71.114    22:14    8.00s  0.08s  0.08s -tcsh
+klalic01 pts/4    10.245.55.151    22:13   16.00s  0.25s  0.15s /usr/sup/bin/py
+npower03 pts/7                     22:14    0.00s  0.07s  0.01s w
+vm-hw04{npower03}18: pwd
+/h/npower03/comp11/hw00
+vm-hw04{npower03}19: ls-l[K[K -l
+total 4
+-rw-------. 1 npower03 games 245 Feb  3 22:10 hell0.cpp
+-rw-------. 1 npower03 games   0 Feb  3 22:14 typescript
+vm-hw04{npower03}20: exit
+exit
+
+Script done on Wed 03 Feb 2021 10:14:45 PM EST

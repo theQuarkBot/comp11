@@ -1,0 +1,41 @@
+Made by:  Neil Powers
+Date:     02/18/2021
+File:     written.text
+Purpose:  Supporting documentation for hw02 in comp11
+
+************** Written 1 **************
+
+
+
+************** Written 2 **************
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+        int age = 50;
+        string name = "Sally";
+        string job = "Super Star";
+        
+        age = age + 50;
+        
+        if (name == "Sally" and job == "Super Star")
+        {
+                cout << "Hi Sally" << endl;
+                cout << "You are a super star!!" << endl;
+                                
+                if ((age == 100) or (age != 42) and (name != job))
+                {
+                        cout << "Have a nice day!" << endl;
+                }
+        } else
+        {
+                cout << "This isn't Sally...Goodbye!!" << endl;
+        }
+        
+        return 0;
+}
+
+************** Written 3 **************
