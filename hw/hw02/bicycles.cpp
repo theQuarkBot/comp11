@@ -1,10 +1,9 @@
 // bicycles.cpp
-//      purpose: count the number of bicycles that can be made given available materials.
+//      purpose: count the number of bicycles that can be made given
+//               the available materials.
 //        shows: number of bicycles and leftover parts.
-//         note: 
-//
 //  modified by: Neil Powers
-//         date: 02/18/21
+//         date: 02/20/21
 
 #include <iostream>
 
@@ -17,9 +16,10 @@ const string WHEEL   = "wheel";
 const string FRAME   = "frame";
 const string LINK    = "link";
 
-int getInt(string prompt);
-int possibleBikes(int wheels, int frames, int links);
-string leftoverPart(int bikes, int part, string partName);
+int get_int(string prompt);
+int possible_bikes(int wheels, int frames, int links);
+void print_possible_bikes(int bikes, int wheels, int frames, int links);
+string ends_with(int num);
 
 int main()
 {
@@ -29,16 +29,16 @@ int main()
         int bikes;
 
         // Prompt the user for how many of each part they have.
-        wheels = getInt("Enter the number of wheels: ");
-        frames = getInt("Enter the number of frames: ");
-        links = getInt("Enter the number of links: ");
+        wheels = get_int("Enter the number of wheels: ");
+        frames = get_int("Enter the number of frames: ");
+        links = get_int("Enter the number of links: ");
 
-        bikes = possibleBikes(wheels, frames, links);
+        bikes = possible_bikes(wheels, frames, links);
 
-        string remainingWheels = leftoverPart(bikes, wheels, WHEEL);
-        string remainingFrames = leftoverPart(bikes, frames, FRAME)
-        string remainingLinks = leftoverPart(bikes, links, LINK);
-        
+        // Prints number of bikes that can be made and remaining parts.
+        print_possible_bikes(bikes, wheels, frames, links);
+
+        return 0;
 }
 
 /* getInt
@@ -46,7 +46,7 @@ int main()
  * Purpose:    Get a user input (int) based on a prompt.
  * Returns:    An integer console input.
  */
-int getInt(string prompt)
+int get_int(string prompt)
 {
         int out;
         
@@ -55,7 +55,7 @@ int getInt(string prompt)
         
         if (out < 0) {
                 cout << "You have to enter a positive number." << endl;
-                return getInt(prompt);
+                return get_int(prompt);
         }
         
         return out;
@@ -66,7 +66,7 @@ int getInt(string prompt)
  * Purpose:    Calculate the number of bikes that can be made.
  * Returns:    The number of bikes that can be made.
  */
-int possibleBikes(int wheels, int frames, int links)
+int possible_bikes(int wheels, int frames, int links)
 {
         int bikes = 0;
         
@@ -82,19 +82,35 @@ int possibleBikes(int wheels, int frames, int links)
         return bikes;
 }
 
-string leftoverPart(int bikes, int part, string partName)
+/* print_possible_bikes
+ * Parameters: The number of wheels, frames, and links available; num bikes.
+ * Purpose:    Print to console the number of bikes that can be made.
+ *             Also prints ant leftover parts.
+ * Effects:    Console print.
+ */
+void print_possible_bikes(int bikes, int wheels, int frames, int links)
 {
-        string out = "";
-        int leftover = 0;
-        
-        leftover = part - bikes * getNumPart(partName);
-        
-        
+        // I know the assignment recommends using the mod operator but it
+        // does not work that well for this application.
+        int r_wheels = wheels - (NUM_WHEELS * bikes);
+        int r_frames = frames - (NUM_FRAMES * bikes);
+        int r_links  = links - (NUM_LINKS * bikes);
+
+        cout << "You can make " << bikes << " bike" << ends_with(bikes) << ". "
+                << "There are " << r_wheels << " wheel" << ends_with(r_wheels)
+                << ", " << r_frames << " frame" << ends_with(r_frames)
+                << ", " << r_links << " link" << ends_with(r_links)
+                << " leftover." << endl;
 }
 
-int getNumPart(string partName)
+/* ends_with
+ * Parameters: An integer number.
+ * Purpose:    Returns an "s" depending on part plurality.
+ * Returns:    "s" or ""
+ */
+string ends_with(int num)
 {
-        if (partName == NUM_WHEELS) return NUM_WHEELS;
-        else if (partName == NUM_FRAMES) return NUM_FRAMES;
-        else return NUM_LINKS;
+        if (num != 1)
+                return "s";
+        return "";
 }
