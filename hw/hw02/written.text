@@ -1,10 +1,28 @@
 Made by:  Neil Powers
-Date:     02/18/2021
+Date:     02/23/2021
 File:     written.text
 Purpose:  Supporting documentation for hw02 in comp11
 
 ************** Written 1 **************
 
+bicycles.cpp psuedocode:
+
+Initialize ints bikes, wheels, frames, and links
+
+Get the number of wheels, frames, and links from the user.
+
+Calculate the number of bikes that can be made given the inputs: Set bikes to
+        the number of bikes the wheels can make. If the provided frames makes
+        fewer bikes, make that the new number of bikes. If the provided links
+        makes fewer bikes, make that the new bikes.
+
+Calculate the remaining number of wheels, frames, and links: For each part,
+        subtract the number of that part used to make the number of possible
+        bikes and make that the remaining part.
+
+Print how many bikes remain. Print how many of each part can be made.
+        For each, if the count is not one (e.g. two bikes) include an "s" at the
+        end of the part (e.g. "1 wheel" vs "5 wheels").
 
 
 ************** Written 2 **************
@@ -39,3 +57,16 @@ int main()
 }
 
 ************** Written 3 **************
+
+I tested my rock paper scissors program by artificially having the computer
+choose rock, paper, and scissors. For each, I tested every possible human move
+and made sure each worked as intended. In the end, I won, tied, and lost what I
+was supposed to. To ensure the random number generator worked, I made it
+generate 100 random numbers and checked that 0, 1, and 2 were all produced at a
+relatively even rate (they were). I then played an actual game of rps against
+the computer to check that everything was still working. as intended.
+
+************** Written 4 **************
+
+I think I spent about 5 hours on this assignment over the course of 5 days, 
+including time trying to figure out how to solve each problem with others.

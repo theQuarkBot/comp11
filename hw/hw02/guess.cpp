@@ -1,6 +1,7 @@
 /* guess.cpp
  * Purpose:     Asks the user to guess a random number a number of times.
  * Modified by: Neil Powers
+ * Date:        02/21/21
  */
 
 #include <iostream>
@@ -9,7 +10,7 @@
 
 using namespace std;
 
-const int MAX_TRIES       = 3;
+const int MAX_TRIES   = 3;
 const int LOWER_BOUND = 5;
 const int UPPER_BOUND = 15;
 
@@ -37,7 +38,7 @@ int main()
 int GetRandomNumber(int lower, int upper)
 {
         int range = upper - lower;
-        return rand() % range + lower;
+        return rand() % (range + 1) + lower;
 }
 
 /* GuessNum

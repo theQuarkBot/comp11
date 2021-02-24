@@ -6,10 +6,6 @@
  */
 
 #include <iostream>
-
-// The following are for srand() and time()
-// for random numbers. Leave them 
-// in your program.
 #include <cstdlib>
 #include <ctime>
 
@@ -24,6 +20,7 @@ int GetHumanMove();
 int GetComputerMove();
 string WhoWins(int human_move, int computer_move);
 void ReportWinner(string winner, int computer_move);
+string WhatMove(int computer_move);
 
 int main()
 {
@@ -119,10 +116,7 @@ string WhoWins(int human_move, int computer_move)
 void ReportWinner(string winner, int computer_move)
 {
         // convert the computer move to a string.
-        string computer_move_;
-        if (computer_move == ROCK) computer_move_ = "rock";
-        else if (computer_move == PAPER) computer_move_ = "paper";
-        else computer_move_ = "scissors";
+        string computer_move_ = WhatMove(computer_move);
 
         // print the outcome.
         if (winner == "computer") cout << "You lost. ";
@@ -131,4 +125,16 @@ void ReportWinner(string winner, int computer_move)
 
         // print what the computer chose.
         cout << "The computer chose " << computer_move_ << "." << endl;
+}
+
+/* WhatMove
+ * Parameters: A number between 0 and 2.
+ * Purpose: Convert an integer number to a string move.
+ * Returns: "rock", "paper", or "scissors".
+ */
+string WhatMove(int computer_move)
+{
+        if (computer_move == ROCK) return "rock";
+        else if (computer_move == PAPER) return "paper";
+        else return "scissors";
 }
