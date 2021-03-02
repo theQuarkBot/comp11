@@ -1,10 +1,11 @@
-// flights.cpp
+// dictionary.cpp
 //      purpose: Get a word from a user and define it.
 //  modified by: Neil Powers
-//         date: 02/28/21
+//         date: 03/01/21
+//        notes: No bugs
 
 #include <iostream>
-#include <array>
+// #include <array>
 // #include <string>
 
 using namespace std;

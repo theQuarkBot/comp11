@@ -1,0 +1,46 @@
+written.text
+    purpose: some documentation and other assignments for hw03
+modified by: Neil Powers
+       date: 03/02/2021
+
+**************************** Written 1 ****************************
+Benefits of using functions:
+    1. you can reuse snippets of code
+    2. you can make your code more readeable
+    3. you can reduce the whole program into small, bite-sized snippets that
+        are easy to think about
+
+**************************** Written 2 ****************************
+
+pattern.cpp
+
+In the main, call a function to make the pattern. In this function, take user
+input for the two strings to be patterned together and an integer for the number
+of repetitions.
+
+Call output_pattern() using these inputs.
+
+In output_pattern, if the number of remaining lines to print is greater than 1,
+then call output_pattern again but decrement the number of remaining lines by
+one. Once the recursive loop gets to the base case (remaining repetitions < 1),
+then print s1s2 5 times using a print_line(s1, s2) function, with the order
+dependent on whether the current line is odd or even.
+
+In the print_line function, print s1s2/s2s1 recursively 5 times, with the base
+case being a new line.
+
+Note: though the lines that appear later are called first (in the order of 
+the program) the lines still print in order, from line 1 to n because the
+function calls itself before printing the line.
+
+**************************** Written 3 ****************************
+
+Function 1: Returns the lower of the two numbers (and either if they are equal).
+
+Function 2: Returns c + a + b. 
+
+Function 3: Returns the greatest common factor of a and b.
+
+**************************** Written 4 ****************************
+
+I spent about 2 hours on the assignment (I did not have to change flights.cpp).

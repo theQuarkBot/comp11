@@ -124,7 +124,7 @@ void ReportWinner(string winner, int computer_move)
         else cout << "It's a tie. ";
 
         // print what the computer chose.
-        cout << "The computer chose " << computer_move_ << "." << endl;
+        cout << "The computer also chose " << computer_move_ << "." << endl;
 }
 
 /* WhatMove
