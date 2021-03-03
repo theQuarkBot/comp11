@@ -31,6 +31,11 @@ void make_pattern()
 
         cin >> s1 >> s2 >> n;
 
+        // testing for empty s1 and s2
+        // s1 = "";
+        // s2 = "";
+        // cin >> n
+
         output_pattern(s1, s2, n);
 }
 
