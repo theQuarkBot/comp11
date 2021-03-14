@@ -12,19 +12,53 @@
 using namespace std;
 
 string int_to_string(int num);
-// TODO:  Add any extra function prototypes you like here
+void testing(int number, string correct_output);
 
 /*
  * main function tests the int_to_string function
  */
 int main()
 {
-        // TODO:  add testing code here and remove this comment
+        testing(123, "123");
+        testing(0, "0");
+        testing(-104, "-104");
+        testing(100, "100");
+
         return 0;
 }
 
+string int_to_string(int num)
+{
+        bool negative = false;
 
-// TODO:  Student writes int_to_string here (and removes this comment)
-//        Be sure to include a good function contract in the comments
-//        above the function!
+        if (num == 0) return "0";
+        else if (num < 0) {
+                negative = true;
+                num *= -1;
+        }
 
+        string out = "";
+        
+        while (num != 0) {
+                char cur = (num % 10) + 48;
+                out = cur + out;
+                num = num / 10;
+        }
+
+        if (negative) out = "-" + out;
+
+        return out;
+}
+
+void testing(int number, string correct_output)
+{
+        string output = int_to_string(number);
+
+        cout << "TESTING: " << number << endl;
+
+        if (output == correct_output) {
+                cout << "SUCCESS: " << output << endl;
+        } else {
+                cout << "FAILURE: " << output << endl;
+        }
+}

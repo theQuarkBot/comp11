@@ -12,7 +12,6 @@
 using namespace std;
 
 int string_to_int(string s);
-// TODO:  Add any extra function prototypes you like here
 void print_int(int i);
 string get_string();
 void testing(string s, int val);
