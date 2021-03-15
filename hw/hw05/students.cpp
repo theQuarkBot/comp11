@@ -73,9 +73,9 @@ void print_student(int index, Student students[])
 {
     if (index == -1) {
         cout << "Student not found." << endl;
+    } else {
+        cout << "Name: " << students[index].firstName << " " 
+            << students[index].lastInitial << endl;
+        cout << "GPA: " << students[index].gpa << endl;
     }
-
-    cout << "Name: " << students[index].firstName << " " 
-         << students[index].lastInitial << endl;
-    cout << "GPA: " << students[index].gpa << endl;
 }
