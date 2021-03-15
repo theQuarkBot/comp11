@@ -4,7 +4,7 @@
  * Essential idea:  Given an integer, like 87, return the string
  * consisting of the same digits, i. e., "87".
  *
- * By:  <Student name here>
+ * By:  Neil Powers
  */
 
 #include <iostream>
@@ -12,6 +12,7 @@
 using namespace std;
 
 string int_to_string(int num);
+string int_to_string_recursive(int num);
 void testing(int number, string correct_output);
 
 /*
@@ -19,6 +20,7 @@ void testing(int number, string correct_output);
  */
 int main()
 {
+        // test cases for int_to_string
         testing(123, "123");
         testing(0, "0");
         testing(-104, "-104");
@@ -27,10 +29,20 @@ int main()
         return 0;
 }
 
+/* int_to_string
+ * Purpose:     convert an integer to a string, while preserving sign.
+ * Args:        any real integer
+ * Returns:     a string result of converting the int to string
+ * Examples:    123 => "123"
+ *              0 => "0"
+ *              -123 => "-123"
+ *              001 => "1"
+ */
 string int_to_string(int num)
 {
         bool negative = false;
 
+        // determine if number is negative; make positive if true
         if (num == 0) return "0";
         else if (num < 0) {
                 negative = true;
@@ -39,17 +51,49 @@ string int_to_string(int num)
 
         string out = "";
         
+        // convert every number to a character and concetenate them.
         while (num != 0) {
                 char cur = (num % 10) + 48;
                 out = cur + out;
                 num = num / 10;
         }
 
+        // add negative sign to string if it is negative
         if (negative) out = "-" + out;
 
         return out;
 }
 
+/* int_to_string_recursively
+ * Purpose:     recursively convert an integer to a string, while
+ *              preserving sign.
+ * Args:        any real integer
+ * Returns:     a string result of converting the int to string
+ * Examples:    123 => "123"
+ *              0 => "0"
+ *              -123 => "-123"
+ *              001 => "1"
+ */
+string int_to_string_recursive(int num)
+{
+        // determine if number is zero or negative. If not, convert the last
+        // digit to integer and add that to the end of the string.
+        if (num == 0) {
+                return "0";
+        } else if (num < 0) {
+                return "-" + int_to_string(num * -1);
+        } else {
+                char cur = num % 10 + 48;
+                return int_to_string(num / 10) + cur;
+        }
+}
+
+/* testing
+ * Purpose:     compare the result of int_to_string with the correct result
+ * Args:        a test case and the correct result
+ * Returns:     nothing
+ * Effects:     outputs test case, result (success/failure and output)
+ */
 void testing(int number, string correct_output)
 {
         string output = int_to_string(number);

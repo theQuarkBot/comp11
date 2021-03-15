@@ -4,7 +4,7 @@
  * Essential idea:  extract digits from a string and return the integer that
  *                  results.  E. g., "a1b2c3" should produce the integer 123
  *
- * By:  <Student name here>
+ * By:  Neil Powers
  */
 
 #include <iostream>
@@ -33,7 +33,7 @@ int main()
         return 0;
 }
 
-/*
+/* string_to_int
  * Purpose:   extract an integer from the digit characters in a string
  * Arg:       string that may or may not contain digit characters ('0' -- '9')
  * Returns:   the integer that result from extracting digits from string s
@@ -48,6 +48,10 @@ int string_to_int(string s)
 {
         int out = 0;
         
+        // loop through each character of the string
+        // if the character is a number (0-9) add that number to the end of the
+        // result by multiplying the previous result by ten
+        // e.g. "12" => out = 0 * 10 + 1 = 1 => out = 1 * 10 + 2 = 12
         for (int i = 0; i < (int)s.length(); i++) {
                 if (s[i] >= 48 and s[i] <= 57) {
                         out = out * 10 + (s[i] - 48);
