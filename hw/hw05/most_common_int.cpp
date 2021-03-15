@@ -39,8 +39,6 @@ int main()
         int array_len4        = 1;
         int array4[]          = {1};
 
-        // cout << most_common_int(array, array_len) << endl;
-
         // test cases for most_common_int
         testing(array1, array_len1, 1);
         testing(array2, array_len2, 2);

@@ -21,10 +21,7 @@ void testing(string s, int val);
  */
 int main()
 {
-        // TODO:  add testing code here and remove this comment
-        
-        // print_int(string_to_int(get_string()));
-
+        // test cases for string_to_int
         testing("123ab6", 1236);
         testing("comp11issoc00L", 1100);
         testing("ericmetajisgr8", 8);
