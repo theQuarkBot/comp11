@@ -13,7 +13,8 @@
 using namespace std;
 
 // declare the Student struct
-struct Student {
+struct Student
+{
     int    id;
     string firstName;
     char   lastInitial;
@@ -45,8 +46,8 @@ int main()
         {228, "Jackson",  'P', 3.33}
     };
 
-    print_student(find_student(get_student(),
-            students, TOTAL_STUDENTS), students);
+    print_student(find_student(get_student(), students, TOTAL_STUDENTS),
+                  students);
 
     return 0;
 }
