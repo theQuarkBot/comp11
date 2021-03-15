@@ -21,10 +21,10 @@ struct Student {
 
 const int TOTAL_STUDENTS = 10;
 
-
 // Function Prototypes
 int  find_student(int id, Student students[], int num_students);
 void print_student(int index, Student students[]);
+int get_student();
 
 
 int main() {
@@ -44,11 +44,38 @@ int main() {
         {228, "Jackson",  'P', 3.33}
     };
 
-    // YOUR CODE GOES HERE
+    print_student(find_student(get_student(), students, TOTAL_STUDENTS), students);
 
     return 0;
 }
 
-// REMOVE THESE COMMENT LINES AND REPLACE WITH
-// YOUR FUNCTION CONTRACTS AND IMPLEMENTATIONS
-// FOR  find_student AND print_student
+int get_student()
+{
+    int student_number;
+
+    cin >> student_number;
+
+    return student_number;
+}
+
+int find_student(int id, Student students[], int num_students)
+{
+    for (int i = 0; i < num_students; i++) {
+        if (id == students[i].id) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+void print_student(int index, Student students[])
+{
+    if (index == -1) {
+        cout << "Student not found." << endl;
+    }
+
+    cout << "Name: " << students[index].firstName << " " 
+         << students[index].lastInitial << endl;
+    cout << "GPA: " << students[index].gpa << endl;
+}
