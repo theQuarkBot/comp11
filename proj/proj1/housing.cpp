@@ -215,7 +215,7 @@ row_from_lot(string lot)
 void fill_with_no_houses(int rows, int cols, House all_houses[ROWS][COLS]) {
         for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                        all_houses[i][j].no_house_here == false;
+                        all_houses[i][j].no_house_here = true;
                 }
         }
 }
