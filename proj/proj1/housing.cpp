@@ -81,30 +81,16 @@ int main(int argc, char *argv[])
         // Exits program if no input file is detected.
         check_args(argc);
 
-        string filename = argv[1];
-        ifstream input_file;
-
-        input_file.open(filename);
-
-        if (not input_file.is_open())
-        {
-                cerr << "housing.cpp: could not open file: "
-                     << filename << endl;
-                return 1; // if error
-        }
-
         House all_houses[ROWS][COLS];
 
         fill_with_no_houses(ROWS, COLS, all_houses); 
 
+        if (read_all_house_data(argv[1], all_houses)) return 1;
+
         (void)argc;
         (void)argv;
 
-        print_house(all_houses[0][0]);
-
-        //   =======================================================
-        //           YOUR MAIN FUNCTION CODE HERE
-        //   =======================================================
+        print_house(all_houses[0][1]);
 
         return 0;
 }
@@ -196,18 +182,31 @@ void print_house(House h)
 // in the all_houses array
 int col_from_lot(string lot)
 {
-        int column = lot[1] - 64;
-        cout << "Lot: " << lot << " Column: " << column << endl;
+        int column = lot[0] - 64;
+        cerr << "Lot: " << lot << " Column: " << column - 1 << endl;
 
-        return column;
+        return column - 1;
 }
 
-int
-row_from_lot(string lot)
-{       
-        (void)lot;
+int row_from_lot(string lot)
+{
+        int row = 0;
 
-        return 0;  // REPLACE THIS WITH WHAT YOU REALLY WANT TO RETURN!
+        // loop through each character of the lot
+        // if the character is a number (0-9) add that number to the end of the
+        // result by multiplying the previous result by ten
+        // e.g. "12" => out = 0 * 10 + 1 = 1 => out = 1 * 10 + 2 = 12
+        for (int i = 0; i < (int)lot.length(); i++)
+        {
+                if (lot[i] >= 48 and lot[i] <= 57)
+                {
+                        row = row * 10 + (lot[i] - 48);
+                }
+        }
+
+        cerr << "Lot: " << lot << " Row: " << row - 1 << endl;
+
+        return row - 1;
 }
 
 //  set the no_house_here marker for every position
@@ -220,21 +219,41 @@ void fill_with_no_houses(int rows, int cols, House all_houses[ROWS][COLS]) {
         }
 }
 
-//  given a file with a count n at the top
-//  read the count and then n lines of house data
-//  into appropriate positions in the array
+// read_all_house_data
+// given a file with a count n at the top
+// read the count and then n lines of house data
+// into appropriate positions in the array
 //
-//   return true if file was successfully read
-//          false if file could not be opened
-bool
-read_all_house_data(string filename, House all_houses[ROWS][COLS]) {
-        // IF YOU HAVE FUNCTION ARGUMENTS THAT AREN'T USED YET
-        // THE G++ COMPILER COMPLAINS. THE FOLLOWING LINES ARE
-        // HARMLESS AND THEY SUPPRESS THE COMPLAINT. YOU CAN REMOVE
-        // THE (VOID) LINES AND THIS COMMENT ONCE YOU START USING
-        // THE ARGUMENTS
+// return true if file was successfully read
+//        false if file could not be opened
+bool read_all_house_data(string filename, House all_houses[ROWS][COLS]) {
         (void)filename;
         (void)all_houses;
+
+        ifstream input_file;
+
+        input_file.open(filename);
+
+        if (not input_file.is_open())
+        {
+                cerr << "housing.cpp: could not open file: "
+                     << filename << endl;
+                return true; // if error
+        }
+
+        int num_houses;
+
+        input_file >> num_houses;
+
+        for (int i = 0; i < num_houses; i++) {
+                House h = read_one_house(input_file);
+                int lot_row = row_from_lot(h.lot_code);
+                int lot_col = col_from_lot(h.lot_code);
+
+                all_houses[lot_row][lot_col] = h;
+        }
+
+        input_file.close();
 
         // YOUR CODE HERE
         return false;  // REPLACE THIS WITH WHAT YOU REALLY WANT TO RETURN!
