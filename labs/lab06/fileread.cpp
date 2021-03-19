@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         // check if expected number of arguments are passed.
         if (argc != 2) {
                 cerr << "fileread.cpp: Filename missing on command line"
-                        << endl;
+                     << endl;
 
                 return 1;
         }
