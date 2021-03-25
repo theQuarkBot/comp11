@@ -1,6 +1,9 @@
 // housing.cpp
-// 
-
+// Purpose:             Demonstrate knowledge of structs, functions, ifstream,
+//                      and 2D arrays.
+// Made by:             Neil Powers
+// Last Modified:       03/25/2021
+// Known Bugs:          None
 
 #include <iostream>
 #include <fstream>
@@ -29,21 +32,10 @@ struct House {
 //                      Function Prototypes
 //===============================================================
 
-void check_args(int argc);
 void user_ask_houses(House all_houses[ROWS][COLS]);
 int prompt_user_int(string prompt);
-
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - -
-//   Functions operating on a single house
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - -
-
 House read_one_house(ifstream &input_file);
 void print_house(House h);
-
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
-//   Functions relating to the array of houses
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
-
 int col_from_lot(string lot);
 int row_from_lot(string lot);
 void fill_with_no_houses(int rows, int cols, House all_houses[ROWS][COLS]);
@@ -51,12 +43,15 @@ bool read_all_house_data(string filename, House all_houses[ROWS][COLS]);
 
 #include "housing_hooks.hpp"
 
-    // ============================================================
-
-    int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
         // Exits program if no input file is detected.
-        check_args(argc);
+        if (argc != 2)
+        {
+                cerr << "housing.cpp: Input file missing in command line"
+                     << endl;
+                return 1;
+        }
 
         House all_houses[ROWS][COLS];
 
@@ -71,29 +66,12 @@ bool read_all_house_data(string filename, House all_houses[ROWS][COLS]);
                 return 1;
         }
 
-        // Infinite loop; promt user for row and col and pront house at that
+        // Infinite loop; prompt user for row and col and print house at that
         // location. Break with negative input.
         user_ask_houses(all_houses);
 
         return 0;
 }
-
-// check_args
-// Purpose:     verifies the necessary arguments are given to the program
-// Parameters:  argc and argv
-// Effects:     exits program if conditions are not met.
-void check_args(int argc)
-{
-        if (argc != 2) {
-                cerr << "housing.cpp: Input file missing in command line"
-                     << endl;
-                _Exit(1);
-        }
-}
-
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
-//   Functions operating on a single house
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
 
 // read_one_house
 // Purpose:     read one line of the input_file; return corresponding House
@@ -101,29 +79,16 @@ void check_args(int argc)
 // Returns:     a single house (could be no_house_here)
 House read_one_house(ifstream& input_file)
 {
-        (void) input_file;
+        House out;
 
-        // MAKE MORE COMPACT-----------------------------------------------------------------------------------------------
+        out.no_house_here = false;
 
-        bool no_house_here = false;
-        int id;
-        string lot_code;
-        float price;
-        int bedrooms;
-        string color;
-        string availability;
-
-        input_file >> id >> lot_code >> price >> bedrooms >> color >> availability;
-
-        House out = {
-                no_house_here,
-                id,
-                lot_code,
-                price,
-                bedrooms,
-                color,
-                availability
-        };
+        input_file >> out.id
+                   >> out.lot_code
+                   >> out.price
+                   >> out.bedrooms
+                   >> out.color
+                   >> out.availability;
 
         return out;
 }
@@ -153,10 +118,6 @@ void print_house(House h)
              << endl;
 }
 
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
-//   Functions relating to the array of houses
-// - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
-
 // col_from_lot
 // Purpose:     compute the column from a lot number in a house
 // Parameters:  a lot string
@@ -167,32 +128,40 @@ void print_house(House h)
 // in the all_houses array
 int col_from_lot(string lot)
 {
-        int column = lot[0] - 65;
+        int col = lot[0] - 65;
 
-        return column;
+        return col;
 }
 
+// row_from_lot
+// Purpose:     compute the row from a lot number in a house
+// Parameters:  a lot string
+// Returns:     an integer for the row
+// Example:     "D4" => 3
+//              "E1" => 0
+//              “A5" => 4
+// in the all_houses array
 int row_from_lot(string lot)
 {
         int row = 0;
-
-        // loop through each character of the lot
+ 
+        // loop through each character of the string
         // if the character is a number (0-9) add that number to the end of the
         // result by multiplying the previous result by ten
         // e.g. "12" => out = 0 * 10 + 1 = 1 => out = 1 * 10 + 2 = 12
-        for (int i = 0; i < (int)lot.length(); i++)
-        {
-                if (lot[i] >= 48 and lot[i] <= 57)
-                {
-                        row = row * 10 + (lot[i] - 49);
+        for (int i = 0; i < (int)lot.length(); i++) {
+                if (lot[i] >= 48 and lot[i] <= 57) {
+                        row = row * 10 + (lot[i] - 48);
                 }
         }
 
-        return row;
+        return row - 1;
 }
 
-//  set the no_house_here marker for every position
-//  in the array
+// fill_with_no_houses
+// Purpose:     set every no_house_here in an array of houses to true.
+// Parameters:  the number of rows and cols; a 2D array of houses
+// Effects:     sets no_house_here to true
 void fill_with_no_houses(int rows, int cols, House all_houses[ROWS][COLS]) {
         for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
@@ -202,45 +171,53 @@ void fill_with_no_houses(int rows, int cols, House all_houses[ROWS][COLS]) {
 }
 
 // read_all_house_data
-// given a file with a count n at the top
-// read the count and then n lines of house data
-// into appropriate positions in the array
-//
-// return true if file was successfully read
-//        false if file could not be opened
+// Purpose:     given a file with a count n at the top
+//              read the count and then n lines of house data
+//              into appropriate positions in the array
+//              return true if file was successfully read
+//              false if file could not be opened
+// Parameters:  a string filename, which will be the ifstream, and a 2D
+//              array of houses.
+// Returns:     a boolean; true if there was an error.
+// Effects:     reads all houses from a ifstream into a 2D array of houses.
 bool read_all_house_data(string filename, House all_houses[ROWS][COLS]) {
-        (void)filename;
-        (void)all_houses;
-
         ifstream input_file;
 
         input_file.open(filename);
 
+        // make sure input_file is open
         if (not input_file.is_open())
         {
-                return false; // if error
+                return false;
         }
 
+        // get the number of houses to be read from the first line of ifstream
         int num_houses;
-
         input_file >> num_houses;
 
+        // read all houses into the 2D array
         for (int i = 0; i < num_houses; i++) {
                 House h = read_one_house(input_file);
                 int lot_row = row_from_lot(h.lot_code);
                 int lot_col = col_from_lot(h.lot_code);
 
-                cerr << "Lot: " << h.lot_code << " Column: " << lot_col << " Row: " << lot_row << endl;
+                cerr << i << endl;
 
                 all_houses[lot_row][lot_col] = h;
         }
 
         input_file.close();
 
-        // YOUR CODE HERE
-        return true;  // REPLACE THIS WITH WHAT YOU REALLY WANT TO RETURN!
+        return true;
 }
 
+// user_ask_houses
+// Purpose:     infinitely ask a user for houses until a negative input is
+//              recieved... print the house at each location given by the user,
+//              if any.
+// Parameters:  a 2D array of houses
+// Effects:     calls promt_user_int; prints houses based on row and col
+//              given by user
 void user_ask_houses(House all_houses[ROWS][COLS])
 {
         while (true) {
@@ -255,6 +232,10 @@ void user_ask_houses(House all_houses[ROWS][COLS])
         }
 }
 
+// prompt_user_int
+// Purpose:     prompts the user for an integer with a specified prompt
+// Parameters:  a prompt string
+// Effects:     cout and cin calls
 int prompt_user_int(string prompt)
 {
         cout << prompt;

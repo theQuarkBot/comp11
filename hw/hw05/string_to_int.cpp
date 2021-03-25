@@ -22,7 +22,7 @@ void testing(string s, int val);
 int main()
 {
         // test cases for string_to_int
-        testing("123ab6", 1236);
+        testing("E10", 10);
         testing("comp11issoc00L", 1100);
         testing("ericmetajisgr8", 8);
         testing("cann0L15", 15);
