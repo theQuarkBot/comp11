@@ -15,13 +15,6 @@ const int COLS = 20;
 // Each House struct records the information about one house.
 // If "no_house_here" is false, none of the other fields are declared.
 // If it is true, ever variable is declared.
-// ---bool no_house_here;
-// ---int id;
-// ---string lot_code;
-// ---float price;
-// ---int bedrooms;
-// ---string color;
-// ---string availability;
 struct House {
         bool    no_house_here;  // true if there is NO house on this location
         int     id;             // id from the data file, converted to int
@@ -37,60 +30,50 @@ struct House {
 //===============================================================
 
 void check_args(int argc);
+void user_ask_houses(House all_houses[ROWS][COLS]);
+int prompt_user_int(string prompt);
 
 // - -  - - - - - - - - - - - - -  - - - - - - - - - - -
 //   Functions operating on a single house
 // - -  - - - - - - - - - - - - -  - - - - - - - - - - -
 
-// read one line of the input_file; return corresponding House
 House read_one_house(ifstream &input_file);
-
 void print_house(House h);
-
 
 // - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
 //   Functions relating to the array of houses
 // - -  - - - - - - - - - - - - -  - - - - - - - - - - - 
 
-// given a lot code, compute the column and row (respectively)
-// in the all_houses array
 int col_from_lot(string lot);
-
 int row_from_lot(string lot);
-
-//  set the no_house_here marker for every position
-//  in the array
 void fill_with_no_houses(int rows, int cols, House all_houses[ROWS][COLS]);
-
-//  given a file with a count n at the top
-//  read the count and then n lines of house data
-//  into appropriate positions in the array
-//
-//   return true if file was successfully read
-//          false if file could not be opened
 bool read_all_house_data(string filename, House all_houses[ROWS][COLS]);
 
-
-// used for comp11 testing; do not remove.
 #include "housing_hooks.hpp"
 
-// ============================================================
+    // ============================================================
 
-int main(int argc, char *argv[])
+    int main(int argc, char *argv[])
 {
         // Exits program if no input file is detected.
         check_args(argc);
 
         House all_houses[ROWS][COLS];
 
+        // fill the array with no houses (no_house_here = true)
         fill_with_no_houses(ROWS, COLS, all_houses); 
 
-        if (read_all_house_data(argv[1], all_houses)) return 1;
+        // check that read_all_house_data could be read and stored to
+        // all_houses. end program if not.
+        if (not read_all_house_data(argv[1], all_houses)) {
+                cerr << "housing.cpp: could not open file: "
+                     << argv[1] << endl;
+                return 1;
+        }
 
-        (void)argc;
-        (void)argv;
-
-        print_house(all_houses[0][1]);
+        // Infinite loop; promt user for row and col and pront house at that
+        // location. Break with negative input.
+        user_ask_houses(all_houses);
 
         return 0;
 }
@@ -119,6 +102,8 @@ void check_args(int argc)
 House read_one_house(ifstream& input_file)
 {
         (void) input_file;
+
+        // MAKE MORE COMPACT-----------------------------------------------------------------------------------------------
 
         bool no_house_here = false;
         int id;
@@ -159,12 +144,12 @@ void print_house(House h)
 
         if (h.availability == "available") availability = "Yes";
 
-        cout << "ID: "            << h.id
+        cout << "Id: "            << h.id
              << " Lot: "          << h.lot_code
              << " Color: "        << h.color
              << " Price: "        << h.price
              << " Bedrooms: "     << h.bedrooms
-             << " Availability: " << availability
+             << " Available: " << availability
              << endl;
 }
 
@@ -182,10 +167,9 @@ void print_house(House h)
 // in the all_houses array
 int col_from_lot(string lot)
 {
-        int column = lot[0] - 64;
-        cerr << "Lot: " << lot << " Column: " << column - 1 << endl;
+        int column = lot[0] - 65;
 
-        return column - 1;
+        return column;
 }
 
 int row_from_lot(string lot)
@@ -200,13 +184,11 @@ int row_from_lot(string lot)
         {
                 if (lot[i] >= 48 and lot[i] <= 57)
                 {
-                        row = row * 10 + (lot[i] - 48);
+                        row = row * 10 + (lot[i] - 49);
                 }
         }
 
-        cerr << "Lot: " << lot << " Row: " << row - 1 << endl;
-
-        return row - 1;
+        return row;
 }
 
 //  set the no_house_here marker for every position
@@ -236,9 +218,7 @@ bool read_all_house_data(string filename, House all_houses[ROWS][COLS]) {
 
         if (not input_file.is_open())
         {
-                cerr << "housing.cpp: could not open file: "
-                     << filename << endl;
-                return true; // if error
+                return false; // if error
         }
 
         int num_houses;
@@ -250,11 +230,35 @@ bool read_all_house_data(string filename, House all_houses[ROWS][COLS]) {
                 int lot_row = row_from_lot(h.lot_code);
                 int lot_col = col_from_lot(h.lot_code);
 
+                cerr << "Lot: " << h.lot_code << " Column: " << lot_col << " Row: " << lot_row << endl;
+
                 all_houses[lot_row][lot_col] = h;
         }
 
         input_file.close();
 
         // YOUR CODE HERE
-        return false;  // REPLACE THIS WITH WHAT YOU REALLY WANT TO RETURN!
+        return true;  // REPLACE THIS WITH WHAT YOU REALLY WANT TO RETURN!
+}
+
+void user_ask_houses(House all_houses[ROWS][COLS])
+{
+        while (true) {
+                int row, col;
+
+                row = prompt_user_int("Enter row: ");
+                if (row < 0) return;
+                col = prompt_user_int("Enter col: ");
+                if (col < 0) return;
+
+                print_house(all_houses[row][col]);
+        }
+}
+
+int prompt_user_int(string prompt)
+{
+        cout << prompt;
+        int out;
+        cin >> out;
+        return out;
 }
