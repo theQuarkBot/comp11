@@ -73,6 +73,10 @@ int main(int argc, char *argv[])
         return 0;
 }
 
+//===============================================================
+//                      Function Impletmentations
+//===============================================================
+
 // read_one_house
 // Purpose:     read one line of the input_file; return corresponding House
 // Parameters:  an input file stream
@@ -109,23 +113,23 @@ void print_house(House h)
 
         if (h.availability == "available") availability = "Yes";
 
-        cout << "Id: "            << h.id
-             << " Lot: "          << h.lot_code
-             << " Color: "        << h.color
-             << " Price: "        << h.price
-             << " Bedrooms: "     << h.bedrooms
+        cout << "Id: "         << h.id
+             << " Lot: "       << h.lot_code
+             << " Color: "     << h.color
+             << " Price: "     << h.price
+             << " Bedrooms: "  << h.bedrooms
              << " Available: " << availability
              << endl;
 }
 
 // col_from_lot
 // Purpose:     compute the column from a lot number in a house
+//              in the all_houses array
 // Parameters:  a lot string
 // Returns:     an integer for the column
 // Example:     "D4" => 4
 //              "E1" => 5
 //              “A5" => 1
-// in the all_houses array
 int col_from_lot(string lot)
 {
         int col = lot[0] - 65;
@@ -135,12 +139,12 @@ int col_from_lot(string lot)
 
 // row_from_lot
 // Purpose:     compute the row from a lot number in a house
+//              in the all_houses array
 // Parameters:  a lot string
 // Returns:     an integer for the row
 // Example:     "D4" => 3
 //              "E1" => 0
 //              “A5" => 4
-// in the all_houses array
 int row_from_lot(string lot)
 {
         int row = 0;
@@ -200,8 +204,6 @@ bool read_all_house_data(string filename, House all_houses[ROWS][COLS]) {
                 House h = read_one_house(input_file);
                 int lot_row = row_from_lot(h.lot_code);
                 int lot_col = col_from_lot(h.lot_code);
-
-                cerr << i << endl;
 
                 all_houses[lot_row][lot_col] = h;
         }
