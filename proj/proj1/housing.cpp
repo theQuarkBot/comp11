@@ -2,7 +2,7 @@
 // Purpose:             Demonstrate knowledge of structs, functions, ifstream,
 //                      and 2D arrays.
 // Made by:             Neil Powers
-// Last Modified:       03/25/2021
+// Last Modified:       03/31/2021
 // Known Bugs:          None
 
 #include <iostream>
@@ -32,14 +32,14 @@ struct House {
 //                      Function Prototypes
 //===============================================================
 
-void user_ask_houses(House all_houses[ROWS][COLS]);
-int prompt_user_int(string prompt);
 House read_one_house(ifstream &input_file);
 void print_house(House h);
 int col_from_lot(string lot);
 int row_from_lot(string lot);
 void fill_with_no_houses(int rows, int cols, House all_houses[ROWS][COLS]);
 bool read_all_house_data(string filename, House all_houses[ROWS][COLS]);
+
+// Command loop functions
 void command_loop(House all_houses[ROWS][COLS]);
 bool is_available(int house_id, House all_houses[ROWS][COLS]);
 House find_house(int house_id, House all_houses[ROWS][COLS]);
@@ -47,11 +47,15 @@ int matching_houses(float max_price, string desired_color,
                     int desired_bedrooms, House all_houses[ROWS][COLS],
                     House results[ROWS * COLS]);
 int num_neighbors(int house_id, House all_houses[ROWS][COLS]);
+int rent_house(int house_id, House all_houses[ROWS][COLS]);
 
-void print_availability(bool available, int id);
-void print_matching_houses(House houses[ROWS * COLS], int num_houses);
-void print_num_neighbors(int neighbors);
+// Command loop helper functions
+void print_availability(House all_houses[ROWS][COLS]);
+void print_matching_houses(House all_houses[ROWS][COLS]);
+void print_num_neighbors(House all_houses[ROWS][COLS]);
+void print_rent_results(House all_houses[ROWS][COLS]);
 
+// Helper functions
 int max(int a, int b);
 int min(int a, int b);
 
@@ -80,10 +84,7 @@ int main(int argc, char *argv[])
                 return 1;
         }
 
-        // Infinite loop; prompt user for row and col and print house at that
-        // location. Break with negative input.
-        // user_ask_houses(all_houses);
-
+        // run the command loop
         command_loop(all_houses);
 
         return 0;
@@ -230,7 +231,11 @@ bool read_all_house_data(string filename, House all_houses[ROWS][COLS]) {
         return true;
 }
 
-
+// command_loop
+// Purpose:     Loop through a series of commands, calling other functions
+//              depending on the input. 
+// Parameters:  A 2D array of all houses.
+// Effects:     Calls other functions; loops indefinitely until input "q".
 void command_loop(House all_houses[ROWS][COLS])
 {
         while (true) {
@@ -240,46 +245,28 @@ void command_loop(House all_houses[ROWS][COLS])
 
                 if (input == "q") return;
                 else if (input == "a") {
-                        int h_id;
-                        
-                        cin >> h_id;
-
-                        print_availability(is_available(h_id, all_houses), h_id);
+                        print_availability(all_houses);
                 }
                 else if (input == "m") {
-                        float price;
-                        string color;
-                        int bedrooms;
-
-                        cin >> price >> color >> bedrooms;
-
-                        House houses[ROWS * COLS];
-
-                        int num_matching = matching_houses(price, color, bedrooms, all_houses, houses);
-
-                        print_matching_houses(houses, num_matching);
+                        print_matching_houses(all_houses);
                 } 
                 else if (input == "n") {
-                        int h_id;
-
-                        cin >> h_id;
-
-                        int neighbors = num_neighbors(h_id, all_houses);
-
-                        print_num_neighbors(neighbors);
+                        print_num_neighbors(all_houses);
                 } 
-                // else if (input == "r") {
-                        // int h_id;
-// 
-                        // cin >> h_id;
-// 
-                        // int rent_result = rent_house(h_id, all_houses);
-// 
-                        // (void)rent_result;
-                // }
+                else if (input == "r") {
+                        print_rent_results(all_houses);
+                }
+                else {
+                        cout << "Unknown command " << input << endl;
+                }
         }
 }
 
+// is_available
+// Purpose:     Determines if a house with a given id is available
+// Parameters:  A house ID to search for and all_houses
+// Returns:     True if the house is available; false if not (or doesn't exist)
+// Effects:     Calls find_house
 bool is_available(int house_id, House all_houses[ROWS][COLS])
 {
         return (find_house(house_id, all_houses).availability == "available");
@@ -291,6 +278,7 @@ bool is_available(int house_id, House all_houses[ROWS][COLS])
 // Returns:     The first house with a matching id
 House find_house(int house_id, House all_houses[ROWS][COLS])
 {
+        // return the house if it exists
         for (int i = 0; i < ROWS; i++) {
                 for (int j = 0; j < COLS; j++) {
                         if (all_houses[i][j].id == house_id) {
@@ -299,25 +287,35 @@ House find_house(int house_id, House all_houses[ROWS][COLS])
                 }
         }
 
+        // house with values indicating it doesn't exist
         House h;
         h.no_house_here = true;
         h.availability = "booked";
+        h.id = -1; //invalid id
 
         return h;
 }
 
+// matching_houses
+// Purpose:     Finds all houses in a 2D array with suitable PRICE, COLOR, and
+//              NUMBER OF BEDROOMS, and adds them to an array of houses.
+// Returns:     The number of houses matching the conditions
+// Effects:     Edits inputted array.
 int matching_houses(float max_price, string desired_color,
                     int desired_bedrooms, House all_houses[ROWS][COLS],
                     House results[ROWS * COLS])
 {
         int num_matching = 0;
 
+        // count the number of houses matching the conditions and
+        // add them to the results array
         for (int i = 0; i < ROWS; i++) {
                 for (int j = 0; j < COLS; j++) {
                         if (all_houses[i][j].price <= max_price
                             and all_houses[i][j].color == desired_color
                             and all_houses[i][j].bedrooms >= desired_bedrooms) {
-                                results[num_matching++] = all_houses[i][j];
+                                results[num_matching] = all_houses[i][j];
+                                num_matching++;
                         }
                 }
         }
@@ -325,8 +323,15 @@ int matching_houses(float max_price, string desired_color,
         return num_matching;
 }
 
+// num_neighbors
+// Purpose:     Counts the number of neighbors surrounding a given house
+//              Only counts if the house is booked
+// Parameters:  A house if and a 2D array of houses
+// Returns:     The number of neighborring houses
+// Effects:     Calls max() and min() functions
 int num_neighbors(int house_id, House all_houses[ROWS][COLS])
 {
+        // find the location of the house in the 2D array
         House h = find_house(house_id, all_houses);
 
         if (h.no_house_here) return 0;
@@ -336,10 +341,12 @@ int num_neighbors(int house_id, House all_houses[ROWS][COLS])
 
         int neighbors = 0;
 
+        // find neighbors to that house
         for (int i = max(0, r - 1); i <= min(r + 1, ROWS); i++) {
                 for (int j = max(0, c - 1); j <= min(c + 1, COLS); j++) {
                         if ((i != r and j != c)
-                            and all_houses[i][j].availability == "booked") {
+                            and all_houses[i][j].availability == "booked"
+                            and all_houses[i][j].no_house_here == false) {
                                 neighbors++;
                         }
                 }
@@ -348,41 +355,141 @@ int num_neighbors(int house_id, House all_houses[ROWS][COLS])
         return neighbors;
 }
 
+// rent_house
+// Purpose:     Rents a house with a given id if it exists and is available
+// Parameters:  House id and 2D array of houses
+// Returns:     0 if the house does not exist
+//              1 if successfully booked
+//              2 if already booked but exists
+int rent_house(int house_id, House all_houses[ROWS][COLS])
+{
+        House h = find_house(house_id, all_houses);
+
+        if (h.id < 0) return 0; // if the house does not exist
+
+        int row = row_from_lot(h.lot_code);
+        int col = col_from_lot(h.lot_code);
+
+
+        if (all_houses[row][col].availability == "available") {
+                all_houses[row][col].availability = "booked";
+                return 1; // if exists and available
+        }
+
+        return 2; // if booked but exists
+}
+
+// max
+// Purpose:     Determines the max of two integers
+// Parameters:  Two integers
+// Returns:     The greater of the two integers
 int max(int a, int b)
 {
         if (a > b) return a;
         return b;
 }
 
+// min
+// Purpose:     Determines the min of two integers
+// Parameters:  Two integers
+// Returns:     The lesser of the two integers
 int min(int a, int b)
 {
         if (a < b) return a;
         return b;
 }
 
-void print_availability(bool available, int id)
+// print_availability
+// Purpose:     Takes a house id from the user.
+//              Calls is_available to determine whether a house with a matching
+//              id is available. Prints results to console.
+// Parameters:  all_houses
+// Effects:     Print to console. Function calls.
+void print_availability(House all_houses[ROWS][COLS])
 {
+        int id;
+
+        cin >> id;
+
+        // determine whether the house is available
+        bool available = is_available(id, all_houses);
+
         if (available) {
                 cout << "House " << id << " is available" << endl;
         } else {
-                cout << "Sorry, House " << id << "is not available" << endl;
+                cout << "Sorry, House " << id << " is not available" << endl;
         }
 }
 
-void print_matching_houses(House houses[ROWS * COLS], int num_houses)
+// print_matching_houses
+// Purpose:     Takes a price, color, and number of bedrooms from console.
+//              Finds the number of houses matching these conditions.
+//              Prints these results.
+// Paremeters:  all_houses
+// Effects:     Input and output to console
+void print_matching_houses(House all_houses[ROWS][COLS])
 {
+        float price;
+        string color;
+        int bedrooms;
+        int num;
+        House houses[ROWS * COLS];
+
+        cin >> price >> color >> bedrooms;
+        
+        num = matching_houses(price, color, bedrooms, all_houses, houses);
+
         cout << "Matching Houses:" << endl;
 
-        for (int i = 0; i < num_houses; i++) {
+        for (int i = 0; i < num; i++) {
                 print_house(houses[i]);
         }
 }
 
-void print_num_neighbors(int neighbors)
+// print_num_neighbors
+// Purpose:     Print the number of neighbors to a house.
+//              Takes a house id from console and determines the number of
+//              neighbors to a house with the matching id. Prints those results.
+// Parameters:  The number of neighbors
+// Effects:     Prints to console
+void print_num_neighbors(House all_houses[ROWS][COLS])
 {
+        int h_id;
+        int neighbors;
+
+        cin >> h_id;
+
+        neighbors = num_neighbors(h_id, all_houses);
+
         if (neighbors == 0) {
                 cout << "You have no neighbors, practice your drums!" << endl;
         } else {
                 cout << "You have " << neighbors << " neighbors!" << endl;
+        }
+}
+
+// print_rent_result
+// Purpose:     Print the results of renting a house. Takes an id input from
+//              console and uses that to rent a house.
+// Parameters:  all_houses
+// Effects:     Prints to console
+void print_rent_results(House all_houses[ROWS][COLS])
+{
+        int h_id;
+        int rent_result;
+        
+        cin >> h_id;
+        
+        rent_result = rent_house(h_id, all_houses);
+
+        if (rent_result == 0) {
+                cout << "You can't rent a house that doesn't exist,"
+                     << " but good try" << endl;
+        } else if (rent_result == 1) {
+                cout << "Congrats, you rented a house!" 
+                     << " Hope your door knobs don't fall off" << endl;
+        } else {
+                cout << "Too late...i hear the dumpster"
+                     << " behind hill has some spaces open" << endl;
         }
 }
