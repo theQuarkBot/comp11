@@ -47,10 +47,9 @@ using namespace std;
 //
 Animal_Array_List::Animal_Array_List()
 {
-        //   REPLACE THE FOLLOWING WITH YOUR CODE
-        cout << "ERROR: Animal_Array_List constructor called "
-             <<  "but student code not implemented"
-             << endl;
+        m_capacity    = INITIAL_CAPACITY;
+        animals       = new Animal[m_capacity];
+        m_num_animals = 0;
 }
 
 //
@@ -58,10 +57,7 @@ Animal_Array_List::Animal_Array_List()
 //
 Animal_Array_List::~Animal_Array_List()
 {
-        //   REPLACE THE FOLLOWING WITH YOUR CODE
-        cout << "ERROR: Animal_Array_List destructor called "
-             <<  "but student code not implemented"
-             << endl;
+        delete [] animals;
 }
 
 //
@@ -71,11 +67,11 @@ Animal_Array_List::~Animal_Array_List()
 void 
 Animal_Array_List::add(Animal a)
 {
-        //   REPLACE THE FOLLOWING WITH YOUR CODE
-        (void) a;
-        cout << "ERROR: Animal_Array_List::add called "
-             <<  "but student code not implemented"
-             << endl;
+        while (m_num_animals >= m_capacity) {
+                expand();
+        }
+        
+        animals[m_num_animals++] = a;
 }
 
 //
@@ -84,11 +80,7 @@ Animal_Array_List::add(Animal a)
 int
 Animal_Array_List::num_animals()
 {
-        //   REPLACE THE FOLLOWING WITH YOUR CODE
-        cout << "ERROR: Animal_Array_List::num_animals called "
-             <<  "but student code not implemented"
-             << endl;
-        return 0;       // REPLACE THIS
+        return m_num_animals;
 }
 
 //
@@ -97,18 +89,11 @@ Animal_Array_List::num_animals()
 Animal 
 Animal_Array_List::animal_at(int index)
 {
-        //   REPLACE THE FOLLOWING WITH YOUR CODE
-        (void) index;
-        cout << "ERROR: Animal_Array_List::animal_at called "
-             <<  "but student code not implemented"
-             << endl;
-        // The following return statement is a placeholder
-        // that returns an "empty" animal until
-        // you have properly implemented this
-        // function. Replace it with a statement
-        // returning the requested Animal from the
-        // list
-        return Animal{};
+        if (not (index < m_num_animals)) {
+                cerr << "ERROR: No animal at position " << index << endl;
+        }
+
+        return animals[index];
 }
 
 //
@@ -117,10 +102,15 @@ Animal_Array_List::animal_at(int index)
 void
 Animal_Array_List::expand()
 {
-        //   REPLACE THE FOLLOWING WITH YOUR CODE
-        cout << "ERROR: Animal_Array_List::expand called "
-             <<  "but student code not implemented"
-             << endl;
+        Animal *temp_animals = new Animal[m_capacity * 2];
+
+        for (int i = 0; i < m_capacity; i++) {
+                temp_animals[i] = animals[i];
+        }
+
+        delete [] animals;
+
+        animals = temp_animals;
 }
 
 
@@ -132,8 +122,7 @@ Animal_Array_List::expand()
 void
 Animal_Array_List::print()
 {
-        //   REPLACE THE FOLLOWING WITH YOUR CODE
-        cout << "ERROR: Animal_Array_List::print called "
-             <<  "but student code not implemented"
-             << endl;
+        for (int i = 0; i < m_num_animals; i++) {
+                animals[i].print();
+        }
 }

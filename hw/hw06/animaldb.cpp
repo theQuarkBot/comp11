@@ -82,15 +82,10 @@ int main(int argc, char *argv[])
                       << endl;
             return 1;
         }
-        
-        //=====================================================
-        //             STUDENT CODE NEEDED HERE
-        //
-        //     Follow the assignment instructions. At first
-        //     you will put testing code here. Later you will
-        //     remove that testing code and replace it with
-        //     the implementation of your application.
-        //=====================================================
+
+        Animal_Array_List all_animals = Animal_Array_List();
+
+        initialize_DB(file, &all_animals);
 
         file.close();
         return 0;

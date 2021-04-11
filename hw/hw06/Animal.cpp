@@ -60,23 +60,21 @@ Animal::Animal()
 
 Animal::Animal(ifstream& input_file)
 {
+        input_file >> m_name
+                   >> m_origin
+                   >> m_diet
+                   >> m_ear_size
+                   >> m_classification;
 
-         //                  YOUR CODE HERE
-
-
-         // DELETE THE FOLLOWING CODE AND THIS COMMENT, AND
-         // REPLACE WITH YOUR CODE TO INITIALIZE A SINGLE ANIMAL
-         // BY READING DATA VALUES FROM THE OPEN FILE
-         //
-         // YOU DO NOT NEED TO CHECK FOR END OF FILE OR ERRORS,
-         // JUST READ THE VALUES FROM THE STREAM
-         //
-
-        (void)input_file;
-        cout << "ERROR: Animal constructor called but "
-                "student code not implemented"
-             << endl;
-        
+        if (m_name              == "UNINITIALIZED"
+            or m_origin         == "UNINITIALIZED"
+            or m_diet           == "UNINITIALIZED"
+            or m_ear_size       == "UNINITIALIZED"
+            or m_classification == "UNINITIALIZED") {
+                cerr << "ERROR: Animal constructor called but "
+                        "animal could not be read."
+                     << endl;
+            }
 }
 
 
@@ -108,20 +106,17 @@ string Animal::origin()
 
 string Animal::diet()
 {
-        // YOUR CODE HERE
-        return "";       // REPLACE THIS
+        return m_diet;
 }
 
 string Animal::ear_size()
 {
-        // YOUR CODE HERE
-        return "";       // REPLACE THIS
+        return m_ear_size;
 }
 
 string Animal::classification()
 {
-        // YOUR CODE HERE
-        return "";       // REPLACE THIS
+        return m_classification;
 }
 
 // *************************************************************************
@@ -139,10 +134,10 @@ string Animal::classification()
 //
 void Animal::print()
 {
-        cout << "name=" << m_name 
-             << " origin=" << m_origin
-             << " diet=" << m_diet
-             << " ear_size=" << m_ear_size
+        cout << "name="            << m_name 
+             << " origin="         << m_origin
+             << " diet="           << m_diet
+             << " ear_size="       << m_ear_size
              << " classification=" << m_classification
              << endl;
 }
