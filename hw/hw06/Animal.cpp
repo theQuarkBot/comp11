@@ -5,14 +5,16 @@
 //        Member function and constructor implementations for 
 //        the Animal class.
 //
-//  Author:
-//  Date:
+//  Author:     Neil Powers
+//  Date:       04/11/2021
 //
-//  Purpose:
+//  Purpose:    Implementation for Animal object;
+//              Creates an animal with a provided name, origin, diet
+//              ear_size, and classification.
+// 
+//  Known bugs: None
 //
-//  Known bugs:
-//
-//  Testing performed:
+//  Testing performed: Yes
 //
 //*********************************************************************
 
@@ -66,15 +68,15 @@ Animal::Animal(ifstream& input_file)
                    >> m_ear_size
                    >> m_classification;
 
-        if (m_name              == "UNINITIALIZED"
-            or m_origin         == "UNINITIALIZED"
-            or m_diet           == "UNINITIALIZED"
-            or m_ear_size       == "UNINITIALIZED"
-            or m_classification == "UNINITIALIZED") {
-                cerr << "ERROR: Animal constructor called but "
-                        "animal could not be read."
-                     << endl;
-            }
+        // if (m_name              == "UNINITIALIZED"
+        //     or m_origin         == "UNINITIALIZED"
+        //     or m_diet           == "UNINITIALIZED"
+        //     or m_ear_size       == "UNINITIALIZED"
+        //     or m_classification == "UNINITIALIZED") {
+                // cerr << "ERROR: Animal constructor called but "
+                        // "animal could not be read."
+                //      << endl;
+        //     }
 }
 
 

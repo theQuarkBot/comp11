@@ -5,14 +5,16 @@
 //        Member function and constructor/destructor implementations for 
 //        the Animal_Array_List class.
 //
-//  Author:
-//  Date:
+//  Author:     Neil Powers
+//  Date:       04/11/2021
 //
-//  Purpose:
+//  Purpose:    Implementation for Animal_Array_List;
+//              Creates a dynamically allocated array in the heap which
+//              stores a number of Animal objects.
 //
-//  Known bugs:
+//  Known bugs: None
 //
-//  Testing performed:
+//  Testing performed: Yes
 //
 //*********************************************************************
 
@@ -109,7 +111,7 @@ Animal_Array_List::expand()
         }
 
         delete [] animals;
-
+        m_capacity *= 2;
         animals = temp_animals;
 }
 

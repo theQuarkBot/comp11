@@ -1,32 +1,43 @@
 HW 6
 written.text
 
-Name:
-Login ID:
+Name:       Neil Powers
+Login ID:   npower03
 
 
 Written #1:  How I tested my code
 ---------------------------------
 
-Replace this comment with a description of how you tested your code.
-Don't just say "I tried running it a lot."  Give some specifice
-examples.  You could say, for example, that you put a print statement
-at the beginning of every array list member function that printed out
-the name of the function and the values of its parameters whenever it
-was called.  Or you might have put print statements in your function
-that grows your array.  Or you might have constructed some special
-data files to test edge cases in your code.  There are many
-suggestions in the assignment.
+When writing Animal.cpp: I tested each function by making an Animal
+in main using cin instead of the file input steam. I then individually
+printed every m_var using the accessor functions. After making sure
+those worked, I tried the print function to make sure the whole class
+was working.
 
-If you keep this file open and keep a running log, it should not be
-too hard to do!
+When writing Animal_Array_List.cpp: I made each function individually,
+testing each function after making it. For the default constructor, I
+simply set the capacity and number of elements and made an array in
+the heap with some spaces. The destructor was also pretty simple. For
+adding animals to the array, I figured the best way to do it was to
+expand the array until the current number of animals is less than the
+capacity, then add an animal to the end. This was first tested with
+only adding a single animal without expanding the array. The expansion
+loop was only tested after expand() was working. To make sure expand()
+worked as intended, I tried calling it and adding an element to the
+end of the new array, then printing that animal. For the print function,
+I simply called the function after adding the animals to the array and
+checked the print values were correct.
+
+When writing animaldb.cpp: I write animaldb throughout the entire
+process. For instance, I wrote initialize_DB when I was testing the
+add and expand functions for Animal_Array_List. I tested the success
+of this function by printing all the animals. For the
+do_classification_report function, I did pretty much the same thing
+and compared the output to was I think it should be.
 
 
 Written #2:  How much time I spent on this assignment
 -----------------------------------------------------
 
-Please replace this comment with an estimate of the amount of time you
-spent on this assignment in hours, e. g., 6.5 hours.  Be as accurate
-as you can, but we know you are not keeping a timer going:  just give
-your best estimate.
-
+I spent about 1.5 hours writing code and another half hour doing 
+reading instructions and doing miscelleneous things for the assignment.

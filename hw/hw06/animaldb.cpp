@@ -2,20 +2,18 @@
 //
 //                       animaldb program
 //
-//  Author:
-//  Date:
+//  Author:     Neil POwers
+//  Date:       04/11/2021
 //
-//  Purpose:
+//  Purpose:    Main program and supporting functions;
+//              Create a simple in-memory database to store information
+//              about zoo animals from a file and respond to queries
 //
-//  Known bugs:
+//  Known bugs: None
 //
-//  Testing performed:
+//  Testing performed: Yes
 //
 //*********************************************************************
-
-
-// EXCEPT WHERE WE INDICATE THAT MODIFCATIONS ARE NEEDED, YOU
-// CAN ASSUME THAT ALL CODE PROVIDED IN THIS FILE IS CORRECT.
 
 
 #include <fstream>
@@ -83,10 +81,19 @@ int main(int argc, char *argv[])
             return 1;
         }
 
+        // Initialize Animal_Array with file
         Animal_Array_List all_animals = Animal_Array_List();
-
         initialize_DB(file, &all_animals);
 
+        // Print animals with a specified classification if its provided
+        // or all animals
+        if (cmd == CLASSIFICATION_CMD) {
+                do_classification_report(classification, &all_animals);
+        } else {
+                all_animals.print();
+        }
+
+        all_animals.~Animal_Array_List();
         file.close();
         return 0;
 }
@@ -100,38 +107,19 @@ int main(int argc, char *argv[])
 //               Pointer to a list of animals to be searched
 //  Outputs:     Prints a list of matching animals 
 //
-//      REPLACE THE ENTIRE BODY OF THIS FUNCTION WITH YOUR
-//      CODE.
-//
 //*************************************************************
-
 void  do_classification_report(string classification,
                                Animal_Array_List *all_animals) 
 {
-        //=====================================================
-        //                 STUDENT CODE NEEDED HERE
-        //=====================================================
-
-        // REMOVE THE FOLLOWING STATEMENTS AND REPLACE
-        // WITH YOUR IMPLEMENTATION
-        (void) classification;
-        (void) all_animals;
-        cout << "ERROR: do_classification_report not implemented yet."
-             << endl;
+        for (int i = 0; i < all_animals->num_animals(); i++) {
+                // Animal a = all_animals->animal_at(i);
+                // cout << a.classification() << endl;
+                if (all_animals->animal_at(i).classification() 
+                    == classification)
+                        all_animals->animal_at(i).print();
+        }
+        (void)classification;
 }
-
-
-
-
-//===============================================================
-//      THE FOLLOWING COMPLETE FUNCTIONS ARE PROVIDED FOR YOU
-//
-//      THE REMAINDER OF THE FUNCTIONS IN THIS FILE SHOULD BE
-//      COMPLETE AND CORRECT, AND SHOULD NOT BE MODIFIED
-//      BY STUDENTS.
-//===============================================================
-
-
 
 //*************************************************************
 //                         initialize_DB
@@ -146,7 +134,6 @@ void  do_classification_report(string classification,
 //          THIS FUNCTION IS PROVIDED FOR YOU, DO NOT CHANGE IT.
 //
 //*************************************************************
-
 void initialize_DB(ifstream& file, Animal_Array_List *all_animals)
 {
         Animal a = get_animal_from_file(file);
@@ -157,6 +144,7 @@ void initialize_DB(ifstream& file, Animal_Array_List *all_animals)
 }
 
 // Do not modify the follwoing function
+
 Animal
 get_animal_from_file(ifstream& input_file)
 {
@@ -177,7 +165,6 @@ get_animal_from_file(ifstream& input_file)
 //      THIS FUNCTION IS PROVIDED FOR YOU, DO NOT CHANGE IT.
 //
 //*************************************************************
-
 bool parse_cmdline(int argc, char *argv[], string *filename,
                    string *cmd, string *classification)
 {
