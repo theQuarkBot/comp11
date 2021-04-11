@@ -1,0 +1,32 @@
+HW 6
+written.text
+
+Name:
+Login ID:
+
+
+Written #1:  How I tested my code
+---------------------------------
+
+Replace this comment with a description of how you tested your code.
+Don't just say "I tried running it a lot."  Give some specifice
+examples.  You could say, for example, that you put a print statement
+at the beginning of every array list member function that printed out
+the name of the function and the values of its parameters whenever it
+was called.  Or you might have put print statements in your function
+that grows your array.  Or you might have constructed some special
+data files to test edge cases in your code.  There are many
+suggestions in the assignment.
+
+If you keep this file open and keep a running log, it should not be
+too hard to do!
+
+
+Written #2:  How much time I spent on this assignment
+-----------------------------------------------------
+
+Please replace this comment with an estimate of the amount of time you
+spent on this assignment in hours, e. g., 6.5 hours.  Be as accurate
+as you can, but we know you are not keeping a timer going:  just give
+your best estimate.
+

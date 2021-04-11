@@ -10,3 +10,4 @@ hw/hw05/my_student_test.out
 hw/hw05/string_to_int
 hw/hw05/students
 sandbox/
+*.db
