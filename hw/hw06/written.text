@@ -35,11 +35,10 @@ of this function by printing all the animals. For the
 do_classification_report function, I did pretty much the same thing
 and compared the output to was I think it should be.
 
-Later, after completing a program the program, I changed some things
-around to make it more logical (in my opinion) which caused a 
-"double free or corruption (out)" error. I knew this was caused by
-inappropriate deletion of my animals array. To fix it, I set the
-pointer to NULL after deleting it, fixing the crash.
+I also originally called the destructor in main after the program ran,
+but this caused the program to crash so I set the animal array to a 
+nullptr. Later, I realized both of these steps were unnecessary so I
+deleted them.
 
 
 Written #2:  How much time I spent on this assignment

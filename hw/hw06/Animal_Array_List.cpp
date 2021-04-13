@@ -60,7 +60,6 @@ Animal_Array_List::Animal_Array_List()
 Animal_Array_List::~Animal_Array_List()
 {
         delete [] animals;
-        animals = NULL;
 }
 
 //
@@ -94,6 +93,7 @@ Animal_Array_List::animal_at(int index)
 {
         if (not (index < m_num_animals)) {
                 cerr << "ERROR: No animal at position " << index << endl;
+                _Exit(1);
         }
 
         return animals[index];

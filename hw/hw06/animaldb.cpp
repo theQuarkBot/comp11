@@ -2,8 +2,8 @@
 //
 //                       animaldb program
 //
-//  Author:     Neil POwers
-//  Date:       04/11/2021
+//  Author:     Neil Powers
+//  Date:       04/13/2021
 //
 //  Purpose:    Main program and supporting functions;
 //              Create a simple in-memory database to store information
@@ -93,7 +93,6 @@ int main(int argc, char *argv[])
                 all_animals.print();
         }
 
-        all_animals.~Animal_Array_List();
         file.close();
         return 0;
 }
@@ -112,8 +111,6 @@ void  do_classification_report(string classification,
                                Animal_Array_List *all_animals) 
 {
         for (int i = 0; i < all_animals->num_animals(); i++) {
-                // Animal a = all_animals->animal_at(i);
-                // cout << a.classification() << endl;
                 if (all_animals->animal_at(i).classification() 
                     == classification)
                         all_animals->animal_at(i).print();
