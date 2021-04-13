@@ -6,7 +6,7 @@
 //        the Animal_Array_List class.
 //
 //  Author:     Neil Powers
-//  Date:       04/11/2021
+//  Date:       04/13/2021
 //
 //  Purpose:    Implementation for Animal_Array_List;
 //              Creates a dynamically allocated array in the heap which
@@ -60,6 +60,7 @@ Animal_Array_List::Animal_Array_List()
 Animal_Array_List::~Animal_Array_List()
 {
         delete [] animals;
+        animals = NULL;
 }
 
 //
@@ -106,10 +107,12 @@ Animal_Array_List::expand()
 {
         Animal *temp_animals = new Animal[m_capacity * 2];
 
+        // Copy the old array into the new one
         for (int i = 0; i < m_capacity; i++) {
                 temp_animals[i] = animals[i];
         }
 
+        // Make the old array point to the new one
         delete [] animals;
         m_capacity *= 2;
         animals = temp_animals;

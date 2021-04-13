@@ -118,7 +118,6 @@ void  do_classification_report(string classification,
                     == classification)
                         all_animals->animal_at(i).print();
         }
-        (void)classification;
 }
 
 //*************************************************************

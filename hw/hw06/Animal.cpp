@@ -6,7 +6,7 @@
 //        the Animal class.
 //
 //  Author:     Neil Powers
-//  Date:       04/11/2021
+//  Date:       04/13/2021
 //
 //  Purpose:    Implementation for Animal object;
 //              Creates an animal with a provided name, origin, diet
@@ -67,16 +67,6 @@ Animal::Animal(ifstream& input_file)
                    >> m_diet
                    >> m_ear_size
                    >> m_classification;
-
-        // if (m_name              == "UNINITIALIZED"
-        //     or m_origin         == "UNINITIALIZED"
-        //     or m_diet           == "UNINITIALIZED"
-        //     or m_ear_size       == "UNINITIALIZED"
-        //     or m_classification == "UNINITIALIZED") {
-                // cerr << "ERROR: Animal constructor called but "
-                        // "animal could not be read."
-                //      << endl;
-        //     }
 }
 
 
@@ -96,14 +86,12 @@ Animal::Animal(ifstream& input_file)
 
 string Animal::name()
 {
-        // YOUR CODE HERE
-        return "";       // REPLACE THIS
+        return m_name;
 }
 
 string Animal::origin()
 {
-        // YOUR CODE HERE
-        return "";       // REPLACE THIS
+        return m_origin;
 }
 
 string Animal::diet()
