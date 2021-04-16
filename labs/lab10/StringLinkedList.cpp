@@ -41,7 +41,7 @@ StringLinkedList::Node *StringLinkedList::newNode(string s)
  */
 StringLinkedList::StringLinkedList()
 {
-        // TODO:  initialize linked list
+        front = nullptr;
 }
 
 /*
@@ -49,7 +49,9 @@ StringLinkedList::StringLinkedList()
  */
 StringLinkedList::~StringLinkedList()
 {
-        // TODO:  free all heap storage
+        while (front != nullptr) {
+                removeFirst();
+        }
 }
 
 /*
@@ -57,9 +59,7 @@ StringLinkedList::~StringLinkedList()
  */ 
 bool StringLinkedList::isEmpty()
 {
-        // TODO:  Replace this with a correct implementation
-        cout << "Not yet implemented" << endl;
-        return true;
+        return front == nullptr;
 }
 
 /*
@@ -67,8 +67,7 @@ bool StringLinkedList::isEmpty()
  */
 void StringLinkedList::addToFront(string s)
 {
-        // TODO
-        cout << "Not yet implemented" << endl;
+        front = newNode(s, front);
 }
 
 /*
@@ -77,8 +76,12 @@ void StringLinkedList::addToFront(string s)
  */
 void StringLinkedList::removeFirst()
 {
-        // TODO
-        cout << "Not yet implemented" << endl;
+        Node * to_delete = front;
+        if (to_delete != nullptr) {
+                front = front->next;
+                delete to_delete;
+                to_delete = nullptr;
+        }
 }
 
 /*
@@ -87,9 +90,7 @@ void StringLinkedList::removeFirst()
  */
 string StringLinkedList::firstElement()
 {
-        // TODO:  Replace this with a correct implementation
-        cout << "Not yet implemented" << endl;
-        return "";
+        return front->element;
 }
 
 /*
@@ -101,8 +102,25 @@ string StringLinkedList::firstElement()
  */
 void StringLinkedList::print()
 {
-        // TODO
-        cout << "Not yet implemented" << endl;
+        cout << "["
+
+        Node cur;
+        if (front != nullptr) {
+
+        }
+        // cout << "[";
+
+        // Node * cur = front;
+        // if (cur != nullptr) {
+                // cout << cur->element;
+        // }
+
+        // while (cur != nullptr) {
+                // cout << ", " << cur->element;
+                // cur == cur->next;
+        // }
+        // 
+        // cout << "]";
 }
 
 /*
@@ -113,12 +131,11 @@ void StringLinkedList::print()
  */
 int StringLinkedList::length()
 {
-        // TODO:  replace this with a correct definition
-        //        First, just write a loop here.  Test it.
-        //        Then use length(front), which should be
-        //        written recursively.
-        cout << "Not yet implemented" << endl;
-        return -1;
+        int count = 0;
+        for (Node *np = front; np != nullptr; np = np->next) {
+                count++;
+        }
+        return count;
 }
 
 /*
@@ -137,8 +154,21 @@ void StringLinkedList::addToBack(string s)
  */
 void StringLinkedList::addAtPosition(string s, int position)
 {
-        // TODO if you have time
-        cout << "Not yet implemented" << endl;
+        if (position == 0){
+                addToFront(s);
+        } else {
+                Node *prev;
+                int count = 0;
+                for (prev = front; prev != nullptr and count < (position - 1); prev = prev->next;) {
+                        count++;
+                }
+                if (prev == nullptr) {
+                        cerr << "ERROR: Index out of range" << endl;
+                } else {
+                        Node *newNode_p = new Node{prev->next, s};
+                        prev->next = newNode_p;
+                }
+        }
 }
 
 /*

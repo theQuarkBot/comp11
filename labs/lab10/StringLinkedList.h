@@ -31,14 +31,12 @@ public:
         void removeFromPosition(int position);
         
 private:
-        /*
-         * TODO:  Add your Node definition here:
-         */
+        struct Node {
+                string element;
+                Node * next;
+        };
 
-        /*
-         * TODO:  Add your front pointer here:
-         */
-
+        Node * front;
 
         /*
          * I defined the following helper functions.
