@@ -110,10 +110,17 @@ int main(int argc, char *argv[])
 void  do_classification_report(string classification,
                                Animal_Array_List *all_animals) 
 {
+        bool are_animals == false;
         for (int i = 0; i < all_animals->num_animals(); i++) {
                 if (all_animals->animal_at(i).classification() 
-                    == classification)
+                    == classification) {
                         all_animals->animal_at(i).print();
+                        are_animals = true;
+                }
+        }
+        if (not are_animals) {
+                cout << "No animals with classification: " << classification
+                     << endl;
         }
 }
 
