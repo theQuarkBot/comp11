@@ -46,8 +46,7 @@ int main()
 // *************************************************************
 bool is_word(string s)
 {
-    // Determines if the first character is a letter
-    return ((s[0] >= 97 and s[0] <= 122) or (s[0] >= 65 and s[0] <= 90));
+    return ((s[0] >= 'a' and s[0] <= 'z') or (s[0] >= 'A' and s[0] <= 'Z'));
 }
 
 // *************************************************************
@@ -64,7 +63,7 @@ bool is_word(string s)
 string to_lowercase(string s)
 {
     for (int i = 0; i < (int)s.length(); i++) {
-        if ((s[i] >= 65) and  (s[i] <= 90)) {
+        if ((s[i] >= 'A') and  (s[i] <= 'Z')) {
             // Convert character to lowercase.
             s[i] += 32;
         }
