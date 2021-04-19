@@ -14,7 +14,7 @@
  * Mark A. Sheldon, Tufts Uiversity, Spring 2021
  *
  *
- * Student name:
+ * Student name: Neil Powers
  * Date:
  *
  * Anything else you would like to include
@@ -36,7 +36,7 @@ using namespace std;
  */
 WordFreqLinkedList::WordFreqLinkedList()
 {
-        // TODO
+        front = nullptr;
 }
 
 /*
@@ -45,7 +45,9 @@ WordFreqLinkedList::WordFreqLinkedList()
  */
 WordFreqLinkedList::~WordFreqLinkedList()
 {
-        // TODO
+        while (front != nullptr) {
+                removeFirst();
+        }
 }
 
 /*
@@ -54,7 +56,13 @@ WordFreqLinkedList::~WordFreqLinkedList()
  */
 int WordFreqLinkedList::size()
 {
-        // TODO
+        int count = 0;
+        for (Node *np = front; np != nullptr; np = np->next) {
+                count++;
+        }
+
+        numElements = count;
+        return count;
 }
 
 /*
@@ -71,9 +79,35 @@ int WordFreqLinkedList::size()
  */
 void WordFreqLinkedList::countOccurrence(string word)
 {
-        // TODO
-}
+        // Special case if list is empty.
+        if (front == nullptr) {
+                front = newNode(word);
+                return;
+        } // Special case if first node is the given word
+        else if (front->data.word == word) {
+                front->data.freq++;
+                return;
+        } else { 
+                Node * cur = front;
+                Node * new_node = newNode(word);
 
+                while (cur->next != nullptr and cur->next->data.word < word) {
+                        // Increment count if word exists
+                        // if (cur->next->data.word == word) {
+                                // cur->next->data.freq++;
+                                // return;
+                        // }
+                        // Save location of where new node should go
+                        // if (new_node->data.word) {
+                                cur = cur->next;
+                        // }
+                }
+                // Insert the new node
+                new_node->next = cur->next;
+                cur->next = new_node;
+                return;
+        }
+}
 
 /*
  * Purpose:  Return the index-th element of the list
@@ -84,7 +118,26 @@ void WordFreqLinkedList::countOccurrence(string word)
  */
 WordFreq WordFreqLinkedList::get(int index)
 {
-        // TODO
+        size();
+
+        // Exit if index is out of range
+        if ((index < 0) or (index >= numElements)) {
+                cerr << "index " << index
+                     << " out of range [0, " << numElements << ")"
+                     << endl;
+                _Exit(1);
+        }
+
+        // Find the node at position index
+        for (Node *np = front; np->next != nullptr; np = np->next) {
+                if (index-- == 0) {
+                        return np->data;
+                }
+        }
+
+        // Prevent return error
+        cerr << "could not find node." << endl;
+        _Exit(1);
 }
 
 /*
@@ -93,7 +146,29 @@ WordFreq WordFreqLinkedList::get(int index)
  */
 void WordFreqLinkedList::remove(string word)
 {
-        // TODO
+        Node * cur = front;
+        Node * prev = nullptr;
+
+        // Special case: Delete head node if it contains word.
+        if ((cur != nullptr) and (cur->data.word == word)) {
+                front = cur->next;
+                delete cur;
+                return;
+        }
+        // Else search for word to be deleted
+        while (cur != nullptr and cur->data.word != word) {
+                prev = cur;
+                cur = cur->next;
+        }
+
+        // If word was not found, do nothing;
+        if (cur == nullptr) return;
+
+        // Remove node from list
+        prev->next = cur->next;
+
+        // Free memory
+        delete cur;
 }
 
 
@@ -118,4 +193,34 @@ void WordFreqLinkedList::debugPrint()
                 curr = curr->next;
         }
         cout << "]";
+}
+
+/*
+ * Purpose:  remove the first node of the linked list.
+ *           recycles the node by deleting it from memory.
+ */
+void WordFreqLinkedList::removeFirst()
+{
+        Node *to_delete = front;
+        if (to_delete != nullptr) {
+                front = front->next;
+                delete to_delete;
+                to_delete = nullptr;
+        }
+}
+
+/*
+ * Purpose:   create a new node in the heap containing a provided string
+ * Returns:   pointer to a node in the heap
+ * Notes:     node is declared with s as word, 1 as frequency. points to null
+ */
+WordFreqLinkedList::Node * WordFreqLinkedList::newNode(string s)
+{
+        Node *new_node = new Node();
+
+        new_node->data.word = s;
+        new_node->data.freq = 1;
+        new_node->next = nullptr;
+
+        return new_node;
 }

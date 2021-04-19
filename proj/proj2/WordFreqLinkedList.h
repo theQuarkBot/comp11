@@ -57,6 +57,8 @@ private:
         /*******************************************************************/
         // Add any private member functions here:
 
+        Node * newNode(std::string s);
+        void removeFirst();
 
 
 

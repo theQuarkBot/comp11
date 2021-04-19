@@ -13,12 +13,23 @@ Please estimate of the amount of time you spent on this assignment
 but we know you are not keeping a timer going: just give your best
 estimate.
 
-Week 1 time:
+Week 1 time: 1
 Week 2 time:
 
 
 Written #2:  How I tested my code
 ---------------------------------
+
+******************* wordfreq0.cpp *******************
+This program was fairly simple to make after I figured out what it
+was supposed to do. I had to get a word, see if it started with a
+letter, then convert it to lowercase and print it if so. The helper
+functions to determine if it was a word and to convert it to lowercase
+were very easy. To test test them, I hardcoded words into main (e.g. 
+"Hello", "@Hello", "hEllo", etc.) and made sure the outputs were
+correct. To make it read from a file, I simply made it loop through
+every word. I tested this final function by using diff to compare the
+output of written.text to the given .out file.
 
 Replace this comment with a description of how you tested your code.
 Don't just say "I tried running it a lot."  Give some specific

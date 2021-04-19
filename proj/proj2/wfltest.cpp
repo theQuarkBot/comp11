@@ -57,9 +57,9 @@ const string COMMANDS[] = {"size",
 
 int main()
 {
-	command_loop();
+        command_loop();
 
-	return 0;
+        return 0;
 }
 
 /*
@@ -71,32 +71,46 @@ int main()
  */
 void command_loop()
 {
-	string  cmd;
-	WordFreqLinkedList list;
+        string  cmd;
+        WordFreqLinkedList list;
 
-	while ((cmd = get_command()) != "quit" and not cin.fail()) {
+        // cout << ("abba" < "aab") << endl;
+
+        // list.countOccurrence("word1");
+        // list.countOccurrence("word2");
+        // list.countOccurrence("word3");
+        // list.countOccurrence("word3");
+
+        while ((cmd = get_command()) != "quit" and not cin.fail()) {
                 if (cmd == "size") {
-                        ; // TODO
-		} else if (cmd == "print") {
-                        ; // TODO
+                        cout << "Current size: " << list.size() << endl;
+                } else if (cmd == "print") {
+                        list.debugPrint();
+                        cout << endl;
                 } else if (cmd == "count") {
-                        ; // TODO
+                        string word;
+                        cin >> word;
+                        list.countOccurrence(word);
                 } else if (cmd == "get") {
-                        ; // TODO
+                        int index;
+                        cin >> index;
+                        cout << "Word at index " << index << ": " << list.get(index).word << endl;
                 } else if (cmd == "remove") {
-                        ; // TODO
+                        string word;
+                        cin >> word;
+                        list.remove(word);
                 }
         }
 }
 
 string get_command()
 {
-	string cmd;
+        string cmd;
 
-	prompt_for_command();
-	cin >> cmd;
+        prompt_for_command();
+        cin >> cmd;
 
-	return cmd;
+        return cmd;
 }
 
 /*
