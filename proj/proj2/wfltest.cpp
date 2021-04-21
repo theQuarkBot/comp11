@@ -16,8 +16,8 @@
  *        cannot pass it by value.
  *        Do keep functions under 30 lines long!
  *
- * Student name:
- * Date:
+ * Student name: Neil Powers
+ * Date: Apr 20, 2021
  *
  * Anything else you would like to include
  */
@@ -71,15 +71,8 @@ int main()
  */
 void command_loop()
 {
-        string  cmd;
+        string cmd;
         WordFreqLinkedList list;
-
-        // cout << ("abba" < "aab") << endl;
-
-        // list.countOccurrence("word1");
-        // list.countOccurrence("word2");
-        // list.countOccurrence("word3");
-        // list.countOccurrence("word3");
 
         while ((cmd = get_command()) != "quit" and not cin.fail()) {
                 if (cmd == "size") {
@@ -88,17 +81,11 @@ void command_loop()
                         list.debugPrint();
                         cout << endl;
                 } else if (cmd == "count") {
-                        string word;
-                        cin >> word;
-                        list.countOccurrence(word);
+                        list.countOccurrence(getWord());
                 } else if (cmd == "get") {
-                        int index;
-                        cin >> index;
-                        cout << "Word at index " << index << ": " << list.get(index).word << endl;
+                        cout << list.get(getIndex()).word << endl;
                 } else if (cmd == "remove") {
-                        string word;
-                        cin >> word;
-                        list.remove(word);
+                        list.remove(getWord());
                 }
         }
 }

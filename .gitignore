@@ -11,3 +11,4 @@ hw/hw05/string_to_int
 hw/hw05/students
 sandbox/
 *.db
+cs-login

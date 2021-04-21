@@ -1,8 +1,8 @@
 Project 2
 written.text
 
-Name:
-Login ID:
+Name: Neil Powers
+Login ID: npower03
 
 
 Written #1:  How much time I spent on this assignment
@@ -13,12 +13,14 @@ Please estimate of the amount of time you spent on this assignment
 but we know you are not keeping a timer going: just give your best
 estimate.
 
-Week 1 time: 1
+Week 1 time: 4.5 hours
 Week 2 time:
 
 
 Written #2:  How I tested my code
 ---------------------------------
+
+Week 1 testing:
 
 ******************* wordfreq0.cpp *******************
 This program was fairly simple to make after I figured out what it
@@ -31,27 +33,27 @@ correct. To make it read from a file, I simply made it loop through
 every word. I tested this final function by using diff to compare the
 output of written.text to the given .out file.
 
-Replace this comment with a description of how you tested your code.
-Don't just say "I tried running it a lot."  Give some specific
-examples.
+*************** WordFreqLinkedList.cpp ***************
+Like wordfreq0.cpp, I tested this file by iteravely making each
+function. I started by making the essential and simple functions,
+such as the initializer or size. I tested these functions by hardcoding
+nodes into the linked list via the countOccurances function. Once
+everything was working, I started on count occurances (which was by far)
+the hardest function to make. Initially, I tried having a single loop
+that would check for already present words, and add the word to the list
+if it didn't yet exist, but this didn't work 100% of the time. I added
+debug prints in the loop, and discovered the part that added new words
+was 'ahead' a node despice coming after the part that incremented counts,
+So I knew I had make sure I incremented words first. To fix this,
+I added extra cases for the head node (if its null or 'after' the given)
+word. This fixed some cases, but I still had repeating words instead of
+incrementing them. I figured this was because this part was 'ahead' a
+node, so I split the loop in two... which worked when I added and printed
+words.
 
-Presumably, you will use wfltest to test your WordFreqLinkedList.
-Give us a few sample sequences of inputs you tried.
-
-For the other parts, did you put tracing print statements in your
-BinnedWordFreqList?  I did.  I put in tracing print statements to list
-each word as it was being counted, the bin it was sent to, the
-resulting length of the list in that bin, and the total number of word
-in all the bins together.  I used the debugPrint functions, and I also
-put print statements in wordfreq.cpp.
-
-Tell us what you did!
-
-If you keep this file open and keep a running log, it should not be
-too hard to do!
-
-Week 1 testing:
-
+I know if can be improved so that you only have to loop through the
+list once, but I could't figure out how to optimize my function like
+this.
 
 Week 2 testing:
 

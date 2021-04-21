@@ -15,7 +15,7 @@
  *
  *
  * Student name: Neil Powers
- * Date:
+ * Date: Apr 20, 2021
  *
  * Anything else you would like to include
  */
@@ -56,6 +56,7 @@ WordFreqLinkedList::~WordFreqLinkedList()
  */
 int WordFreqLinkedList::size()
 {
+        // Loop through loop counting each node
         int count = 0;
         for (Node *np = front; np != nullptr; np = np->next) {
                 count++;
@@ -79,33 +80,30 @@ int WordFreqLinkedList::size()
  */
 void WordFreqLinkedList::countOccurrence(string word)
 {
-        // Special case if list is empty.
+        // Special case for head node if list is empty
         if (front == nullptr) {
                 front = newNode(word);
-                return;
-        } // Special case if first node is the given word
-        else if (front->data.word == word) {
-                front->data.freq++;
-                return;
-        } else { 
-                Node * cur = front;
+        }
+        // Special case for head node (if its different)
+        else if (word < front->data.word) {
                 Node * new_node = newNode(word);
-
-                while (cur->next != nullptr and cur->next->data.word < word) {
-                        // Increment count if word exists
-                        // if (cur->next->data.word == word) {
-                                // cur->next->data.freq++;
-                                // return;
-                        // }
-                        // Save location of where new node should go
-                        // if (new_node->data.word) {
-                                cur = cur->next;
-                        // }
+                new_node->next = front;
+                front = new_node;
+                return;
+        } else { // Increment word if it exists
+                for (Node * np = front; np != nullptr; np = np->next) {
+                        if (np->data.word == word) {
+                                np->data.freq++;
+                                return;
+                        }
                 }
-                // Insert the new node
+                // Locate where new node should be insert it (or increment it)
+                Node *cur = front;
+                while (cur->next != nullptr and cur->next->data.word < word)
+                        cur = cur->next;
+                Node *new_node = newNode(word);
                 new_node->next = cur->next;
                 cur->next = new_node;
-                return;
         }
 }
 
@@ -118,10 +116,10 @@ void WordFreqLinkedList::countOccurrence(string word)
  */
 WordFreq WordFreqLinkedList::get(int index)
 {
-        size();
+        // size();
 
         // Exit if index is out of range
-        if ((index < 0) or (index >= numElements)) {
+        if ((index < 0) or (index >= size())) {
                 cerr << "index " << index
                      << " out of range [0, " << numElements << ")"
                      << endl;
@@ -129,7 +127,7 @@ WordFreq WordFreqLinkedList::get(int index)
         }
 
         // Find the node at position index
-        for (Node *np = front; np->next != nullptr; np = np->next) {
+        for (Node *np = front; np != nullptr; np = np->next) {
                 if (index-- == 0) {
                         return np->data;
                 }
@@ -147,14 +145,16 @@ WordFreq WordFreqLinkedList::get(int index)
 void WordFreqLinkedList::remove(string word)
 {
         Node * cur = front;
-        Node * prev = nullptr;
 
-        // Special case: Delete head node if it contains word.
+        // Special case: Delete head node if it contains the word.
         if ((cur != nullptr) and (cur->data.word == word)) {
                 front = cur->next;
                 delete cur;
                 return;
         }
+
+        Node * prev = nullptr;
+        
         // Else search for word to be deleted
         while (cur != nullptr and cur->data.word != word) {
                 prev = cur;
@@ -162,12 +162,13 @@ void WordFreqLinkedList::remove(string word)
         }
 
         // If word was not found, do nothing;
-        if (cur == nullptr) return;
+        if (cur == nullptr) {
+                // delete prev;
+                delete cur;
+                return;
+        }
 
-        // Remove node from list
         prev->next = cur->next;
-
-        // Free memory
         delete cur;
 }
 
