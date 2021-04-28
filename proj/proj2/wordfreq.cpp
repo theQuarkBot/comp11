@@ -39,6 +39,9 @@ using namespace std;
 
 void wordLoop();
 string toLowercase(string s);
+bool isWord(string s);
+string getString();
+void printList(WordFreqList * list);
 
 int main()
 {
@@ -50,8 +53,31 @@ int main()
 void wordLoop()
 {
     WordFreqList list;
-    
+    string word;
 
+    while ((word = getString()) != "") {
+        if (isWord(word)) {
+            list.countOccurrence(toLowercase(word));
+        }
+    }
+
+    printList(&list);
+}
+
+string getString()
+{
+    string s;
+    cin >> s;
+    if (not cin.fail()) {
+        return s;
+    }
+
+    return "";
+}
+
+bool isWord(string s)
+{
+    return ((s[0] >= 'a' and s[0] <= 'z') or (s[0] >= 'A' and s[0] <= 'Z'));
 }
 
 string toLowercase(string s)
@@ -63,4 +89,11 @@ string toLowercase(string s)
     }
 
     return s;
+}
+
+void printList(WordFreqList * list)
+{
+    for (int i = 0; i < list->size(); i++) {
+        cout << list->get(i).freq << " " << list->get(i).word << endl;
+    }
 }
