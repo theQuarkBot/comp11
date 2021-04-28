@@ -41,7 +41,7 @@ void wordLoop();
 string toLowercase(string s);
 bool isWord(string s);
 string getString();
-void printList(WordFreqList * list);
+void printList(WordFreqList *list);
 
 int main()
 {
@@ -49,6 +49,12 @@ int main()
 
     return 0;
 }
+
+/*
+ * Purpose:  Run a loop that reeds every word from cin and all viable words
+ *           to cout. Uses WordFreqList.
+ * Effects:  cin and cout calls; acesses memory in the heap.
+ */
 
 void wordLoop()
 {
@@ -64,6 +70,10 @@ void wordLoop()
     printList(&list);
 }
 
+/*
+ * Purpose: Get a string from cin.
+ * Effects: Read from cin
+ */
 string getString()
 {
     string s;
@@ -75,11 +85,20 @@ string getString()
     return "";
 }
 
+/*
+ * Purpose: Checks if a string starts with a letter
+ * Params:  A string
+ * Effects: Returns true or false
+ */
 bool isWord(string s)
 {
     return ((s[0] >= 'a' and s[0] <= 'z') or (s[0] >= 'A' and s[0] <= 'Z'));
 }
 
+/*
+ * Purpose: Converts a string to lowercase
+ * Retuns:  Lowercase string
+ */
 string toLowercase(string s)
 {
     for (int i = 0; i < (int)s.length(); i++){
@@ -91,7 +110,13 @@ string toLowercase(string s)
     return s;
 }
 
-void printList(WordFreqList * list)
+/*
+ * Purpose: Prints the frequency and word of every element in a WordFreqList
+ * Effects: Prints to cout
+ *          i.e. "5 cats"
+ *               "2 rabbits"
+ */
+void printList(WordFreqList *list)
 {
     for (int i = 0; i < list->size(); i++) {
         cout << list->get(i).freq << " " << list->get(i).word << endl;

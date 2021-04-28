@@ -10,8 +10,8 @@
  * Mark A. Sheldon, Tufts University, Spring 2021
  *
  *
- * Student name:
- * Date:
+ * Student name: Neil Powers
+ * Date: Apr 27, 2021
  *
  * Anything else you would like to include
  */
@@ -48,9 +48,13 @@ WordFreqList::~WordFreqList()
  */
 int WordFreqList::size()
 {
-        // TODO Replace the following code with your solution
-        cout << "ERROR:  Student code for 'size' not implemented" << endl;
-        return -1;
+        int count = 0;
+
+        for (int i = 0; i < NUM_BINS; i++) {
+                count += wflists[i].size();
+        }
+
+        return count;
 }
 
 /*
@@ -62,9 +66,13 @@ int WordFreqList::size()
  */
 void WordFreqList::countOccurrence(string word)
 {
-        // TODO Replace the following code with your solution
-        cout << "ERROR:  student code for 'countOccurrence' not implemented"
-             << endl;
+        if (not (word[0] >= 'A' or word[0] <= 'Z')) {
+                cerr << "ERROR: word is not lowercase." << endl;
+                _Exit(1);
+        }
+
+
+        wflists[word[0] - 'a'].countOccurrence(word);
 }
 
 /*
@@ -76,8 +84,20 @@ void WordFreqList::countOccurrence(string word)
  */
 WordFreq WordFreqList::get(int index)
 {
-        // TODO Replace the following code with your solution
-        cout << "ERROR:  student code for 'get' not implemented" << endl;
+        int nums = size();
+        if (index < 0 or index >= nums) {
+                cerr << "ERROR: index out of range (" << 0 << ", "
+                     << nums << "]" << endl;
+                _Exit(1);
+        }
+        int i = 0;
+        while (index >= 0 and i <= NUM_BINS) {
+                if (index < wflists[i].size()) {
+                        return wflists[i].get(index);
+                } else {
+                        index -= wflists[i++].size();
+                }
+        }
         return {"--ERROR--", -1};
 }
 

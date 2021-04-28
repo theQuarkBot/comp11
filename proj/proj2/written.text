@@ -14,7 +14,7 @@ but we know you are not keeping a timer going: just give your best
 estimate.
 
 Week 1 time: 4.5 hours
-Week 2 time:
+Week 2 time: 4 hours
 
 
 Written #2:  How I tested my code
@@ -56,8 +56,30 @@ list once, but I could't figure out how to optimize my function like
 this.
 
 Week 2 testing:
+I started this week by implementing wordfreq.cpp. I knew I needed a function
+to check if a word is a string, and another function to make it lowercase,
+so I copied those functions into wordfreq.cpp from wordfreq0.cpp. I knew they
+both worked from last week. Next, I made a runner function called wordLoop,
+which declared a WordFreqList and a word. Then I made a loop in this function
+that would take cin inputs until cin.fail(), and add each of these inputs
+to my list if they both worked. I checked to make sure this compiled. Next, I
+made a print function what would go through the list and print the freq and
+word of each node by using the get() function. After all of this, I attempted
+to run the funciton. Unfortunately, this didn't work because I could not pass
+the WordFreqList as a variable (bc is uses the heap). To fix this, I passed my
+list as a pointer, allowing me to save time. Once working, I diffed the outputs
+to correct outputs to verify my work.
 
-
+When making BinnedWordFreqList.cpp, I made the simple functions first. these
+included size() and countOccurances(). For the former, I simply added the size
+of each bin and returned that (no testing this yet). For countOccurances,
+I simply added it to the bin at (word[0] - 'a'), and did the regular
+countOccurances function from there. For the get() function, I first checked
+if the index was within bounds. If it was, I went through each bin until the
+max index in that bin exceeded my index. If it did, I found the node from that
+bin. I tested this by running it with literally every file possible. I also
+added a print statement in wordfreq.cpp that kept track of which word I was
+adding to get visual feedback on where I was.
 
 Written #3:  Timing
 -------------------
@@ -78,6 +100,15 @@ Take the "user" times and enter them in the table below for
 AlicInWonderland.txt and your two other files.
 
 
-              AliceInWonderLand    YouPick    YouPick
-wordfreq1
-wordfreq2
+              AliceInWonderLand     words10000  words40000  words
+wordfreq1       0.92                2.02        33.20       630.41
+wordfreq2       0.06                2.01        9.62        35.99
+
+Note: when testing words.text, I printed my index (which word I was one)
+      for every iteration of the loop in wordfreq.cpp. I thid this because
+      I wanted a visual indicator of progress.
+
+I beliebe for words10000, the file was not large enough
+for any optimizations to significantly affect the performance of the program.
+When I ran words40000 the unoptimized version was much slower because it
+had to increment through all the nodes each time.
