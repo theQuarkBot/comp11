@@ -56,14 +56,7 @@ WordFreqLinkedList::~WordFreqLinkedList()
  */
 int WordFreqLinkedList::size()
 {
-        // Loop through loop counting each node
-        int count = 0;
-        for (Node *np = front; np != nullptr; np = np->next) {
-                count++;
-        }
-
-        numElements = count;
-        return count;
+        return numElements;
 }
 
 /*
@@ -83,13 +76,14 @@ void WordFreqLinkedList::countOccurrence(string word)
         // Special case for head node if list is empty
         if (front == nullptr) {
                 front = newNode(word);
+                numElements++;
         }
-        // Special case for head node (if its different)
-        else if (word < front->data.word) {
+        // Special case for head node (if its word comes before front)
+        else if (word < front->data.word) { // if 'apple' < 'bunny'
                 Node * new_node = newNode(word);
                 new_node->next = front;
                 front = new_node;
-                return;
+                numElements++;
         } else { // Increment word if it exists
                 for (Node * np = front; np != nullptr; np = np->next) {
                         if (np->data.word == word) {
@@ -98,12 +92,13 @@ void WordFreqLinkedList::countOccurrence(string word)
                         }
                 }
                 // Locate where new node should be insert it (or increment it)
-                Node *cur = front;
+                Node * cur = front;
                 while (cur->next != nullptr and cur->next->data.word < word)
                         cur = cur->next;
                 Node *new_node = newNode(word);
                 new_node->next = cur->next;
                 cur->next = new_node;
+                numElements++;
         }
 }
 
@@ -116,10 +111,8 @@ void WordFreqLinkedList::countOccurrence(string word)
  */
 WordFreq WordFreqLinkedList::get(int index)
 {
-        // size();
-
         // Exit if index is out of range
-        if ((index < 0) or (index >= size())) {
+        if ((index < 0) or (index >= numElements)) {
                 cerr << "index " << index
                      << " out of range [0, " << numElements << ")"
                      << endl;
@@ -150,6 +143,7 @@ void WordFreqLinkedList::remove(string word)
         if ((cur != nullptr) and (cur->data.word == word)) {
                 front = cur->next;
                 delete cur;
+                numElements--;
                 return;
         }
 
@@ -163,13 +157,13 @@ void WordFreqLinkedList::remove(string word)
 
         // If word was not found, do nothing;
         if (cur == nullptr) {
-                // delete prev;
                 delete cur;
                 return;
         }
 
         prev->next = cur->next;
         delete cur;
+        numElements--;
 }
 
 
@@ -207,6 +201,7 @@ void WordFreqLinkedList::removeFirst()
                 front = front->next;
                 delete to_delete;
                 to_delete = nullptr;
+                numElements--;
         }
 }
 
